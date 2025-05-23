@@ -4,6 +4,7 @@ import { AnimatePresence } from 'framer-motion';
 import LoadingScreen from '@/components/LoadingScreen';
 import ParticleBackground from '@/components/ParticleBackground';
 import MainMenu from '@/components/MainMenu';
+import WelcomeContent from '@/components/WelcomeContent';
 import ProjectsModal from '@/components/modals/ProjectsModal';
 import AboutModal from '@/components/modals/AboutModal';
 import ContactModal from '@/components/modals/ContactModal';
@@ -48,6 +49,7 @@ const Index = () => {
     <div className="min-h-screen relative overflow-hidden">
       <ParticleBackground />
       
+      <WelcomeContent />
       <MainMenu onOpenModal={openModal} />
 
       <AnimatePresence>
