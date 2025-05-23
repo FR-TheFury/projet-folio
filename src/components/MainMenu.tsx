@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Linkedin } from 'lucide-react';
@@ -145,15 +146,15 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
           Explorez mon univers technologique
         </motion.p>
         
-        {/* Decorative elements - repositionnés plus proche du contenu central */}
+        {/* Decorative elements - positionnés plus proche du contenu central */}
         <div className="hidden md:block">
           <motion.div 
-            className="absolute -top-8 -left-8 w-16 h-16 border border-cyan-400/30 rotate-45"
+            className="absolute -top-4 -left-4 w-12 h-12 border border-cyan-400/30 rotate-45"
             animate={{ rotate: [45, 225, 45] }}
             transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
           />
           <motion.div 
-            className="absolute -bottom-8 -right-8 w-12 h-12 border border-pink-400/30 rotate-45"
+            className="absolute -bottom-4 -right-4 w-8 h-8 border border-pink-400/30 rotate-45"
             animate={{ rotate: [45, -135, 45] }}
             transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
           />
