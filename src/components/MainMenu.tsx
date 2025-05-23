@@ -59,7 +59,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
         transition={{ delay: 0.5, duration: 1 }}
       >
         <motion.h1 
-          className="text-6xl md:text-8xl font-bold bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent mb-4 font-mono tracking-wider"
+          className="text-6xl md:text-8xl font-bold bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent mb-8 font-mono tracking-wider"
           animate={{ 
             textShadow: [
               "0 0 20px rgba(0,255,255,0.5)",
@@ -72,43 +72,50 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
           TÉO DEBAY
         </motion.h1>
         
-        {/* Informations personnelles centrales */}
+        {/* Informations personnelles centrales réorganisées */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8 max-w-2xl mx-auto"
+          className="flex flex-col items-center space-y-6 mb-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2, duration: 0.8 }}
         >
-          <div className="flex items-center justify-center gap-2 text-cyan-200">
-            <Calendar size={18} />
-            <span>08/05/2004</span>
+          {/* Première ligne - Date et statut */}
+          <div className="flex items-center justify-center gap-8">
+            <div className="flex items-center gap-2 text-cyan-200">
+              <Calendar size={18} />
+              <span>08/05/2004</span>
+            </div>
+            <div className="flex items-center gap-2 text-cyan-200">
+              <User size={18} />
+              <span>Célibataire, Permis B</span>
+            </div>
           </div>
-          <div className="flex items-center justify-center gap-2 text-cyan-200">
-            <User size={18} />
-            <span>Célibataire, Permis B</span>
-          </div>
-          <div className="flex items-center justify-center gap-2 text-cyan-200">
-            <MapPin size={18} />
-            <span>Ham-en-Artois, 62190</span>
-          </div>
-          <div className="flex items-center justify-center gap-2 text-cyan-200">
-            <Phone size={18} />
-            <a href="tel:0786422377" className="hover:text-white transition-colors">
-              07.86.42.23.77
-            </a>
+          
+          {/* Deuxième ligne - Lieu et téléphone */}
+          <div className="flex items-center justify-center gap-8">
+            <div className="flex items-center gap-2 text-cyan-200">
+              <MapPin size={18} />
+              <span>Ham-en-Artois, 62190</span>
+            </div>
+            <div className="flex items-center gap-2 text-cyan-200">
+              <Phone size={18} />
+              <a href="tel:0786422377" className="hover:text-white transition-colors">
+                07.86.42.23.77
+              </a>
+            </div>
           </div>
         </motion.div>
 
-        {/* Liens de contact */}
+        {/* Liens de contact centrés */}
         <motion.div
-          className="flex justify-center gap-6 mt-6"
+          className="flex justify-center gap-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.4, duration: 0.8 }}
         >
           <a
             href="mailto:teodebaysio@gmail.com"
-            className="flex items-center gap-2 px-4 py-2 border border-cyan-400/50 rounded-lg hover:bg-cyan-400/10 transition-colors text-cyan-300"
+            className="flex items-center gap-2 px-6 py-3 border border-cyan-400/50 rounded-lg hover:bg-cyan-400/10 transition-colors text-cyan-300 hover:text-white"
           >
             <Mail size={16} />
             Email
@@ -117,7 +124,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
             href="https://linkedin.com/in/teo-debay"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-4 py-2 border border-purple-400/50 rounded-lg hover:bg-purple-400/10 transition-colors text-purple-300"
+            className="flex items-center gap-2 px-6 py-3 border border-purple-400/50 rounded-lg hover:bg-purple-400/10 transition-colors text-purple-300 hover:text-white"
           >
             <Linkedin size={16} />
             LinkedIn
