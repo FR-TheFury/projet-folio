@@ -15,7 +15,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
     { id: 'about', label: 'À propos', position: 'bottom-4 left-4 md:bottom-12 md:left-12', icon: '👨‍💻' },
     { id: 'contact', label: 'Contact', position: 'bottom-4 right-4 md:bottom-12 md:right-12', icon: '📡' },
     { id: 'rss', label: 'Flux RSS', position: 'top-1/2 right-4 -translate-y-1/2 md:right-12', icon: '📊' },
-    { id: 'certification', label: 'Certification', position: 'bottom-1/2 left-1/2 -translate-x-1/2 translate-y-1/2 md:bottom-6 md:left-1/2', icon: '🏆' },
+    { id: 'certification', label: 'Certification', position: 'bottom-4 left-1/2 -translate-x-1/2 md:bottom-12 md:left-1/2', icon: '🏆' },
   ];
 
   return (
@@ -57,7 +57,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
       
       {/* Contenu central parfaitement centré */}
       <motion.div 
-        className="text-center z-10 px-4 w-full max-w-4xl mx-auto"
+        className="text-center z-10 px-4 w-full max-w-4xl mx-auto relative"
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.5, duration: 1 }}
@@ -146,15 +146,15 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
           Explorez mon univers technologique
         </motion.p>
         
-        {/* Decorative elements - cachés sur mobile */}
+        {/* Decorative elements - repositionnés autour du contenu central */}
         <div className="hidden md:block">
           <motion.div 
-            className="absolute -top-8 -left-8 w-16 h-16 border border-cyan-400/30 rotate-45"
+            className="absolute -top-16 -left-16 w-16 h-16 border border-cyan-400/30 rotate-45"
             animate={{ rotate: [45, 225, 45] }}
             transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
           />
           <motion.div 
-            className="absolute -bottom-8 -right-8 w-12 h-12 border border-pink-400/30 rotate-45"
+            className="absolute -bottom-16 -right-16 w-12 h-12 border border-pink-400/30 rotate-45"
             animate={{ rotate: [45, -135, 45] }}
             transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
           />

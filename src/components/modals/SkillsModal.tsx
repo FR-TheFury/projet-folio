@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { X, Zap } from 'lucide-react';
+import { X, Zap, Globe, Brain } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface SkillsModalProps {
@@ -10,14 +10,25 @@ interface SkillsModalProps {
 
 const SkillsModal: React.FC<SkillsModalProps> = ({ isOpen, onClose }) => {
   const devSkills = [
-    { name: "React", level: 95, color: "cyan" },
-    { name: "JavaScript", level: 90, color: "yellow" },
-    { name: "TypeScript", level: 85, color: "blue" },
-    { name: "HTML/CSS", level: 95, color: "orange" },
-    { name: "WordPress", level: 80, color: "purple" },
-    { name: "PrestaShop", level: 75, color: "pink" },
-    { name: "Unity", level: 70, color: "green" },
-    { name: "Blender", level: 65, color: "cyan" }
+    { name: "React", level: 95, color: "bg-cyan-400" },
+    { name: "JavaScript", level: 90, color: "bg-yellow-400" },
+    { name: "TypeScript", level: 85, color: "bg-blue-400" },
+    { name: "HTML/CSS", level: 95, color: "bg-orange-400" },
+    { name: "WordPress", level: 80, color: "bg-purple-400" },
+    { name: "PrestaShop", level: 75, color: "bg-pink-400" },
+    { name: "Unity", level: 70, color: "bg-green-400" },
+    { name: "Blender", level: 65, color: "bg-cyan-400" }
+  ];
+
+  const languages = [
+    { name: "Anglais", level: "Très bon niveau", color: "bg-cyan-400" },
+    { name: "Espagnol", level: "Notions", color: "bg-purple-400" }
+  ];
+
+  const softSkills = [
+    "Adaptation rapide",
+    "Organisation de projet et d'équipe", 
+    "Gestion du stock et du matériel"
   ];
 
   return (
@@ -64,12 +75,12 @@ const SkillsModal: React.FC<SkillsModalProps> = ({ isOpen, onClose }) => {
               {/* Content */}
               <div className="space-y-8">
                 <h2 className="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent font-mono">
-                  Compétences Techniques
+                  Compétences
                 </h2>
                 
-                <div className="space-y-6 text-cyan-100">
+                <div className="space-y-8 text-cyan-100">
                   <p className="text-lg leading-relaxed">
-                    Voici un aperçu de mes compétences techniques en développement web et outils de création.
+                    Voici un aperçu de mes compétences techniques, linguistiques et relationnelles.
                   </p>
                   
                   {/* Compétences de développement */}
@@ -93,12 +104,56 @@ const SkillsModal: React.FC<SkillsModalProps> = ({ isOpen, onClose }) => {
                           </div>
                           <div className="w-full bg-gray-700 rounded-full h-2">
                             <motion.div 
-                              className={`bg-${skill.color}-400 h-2 rounded-full`}
+                              className={`${skill.color} h-2 rounded-full`}
                               initial={{ width: 0 }}
                               animate={{ width: `${skill.level}%` }}
                               transition={{ delay: index * 0.1 + 0.5, duration: 1 }}
                             ></motion.div>
                           </div>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Langues */}
+                  <div className="space-y-4">
+                    <h3 className="text-xl font-bold text-cyan-300 flex items-center gap-2">
+                      <Globe size={20} />
+                      Langues
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {languages.map((lang, index) => (
+                        <motion.div
+                          key={lang.name}
+                          className="p-4 border border-purple-400/30 rounded-lg bg-black/20"
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: index * 0.1 }}
+                        >
+                          <h4 className="text-purple-300 font-bold">{lang.name}</h4>
+                          <p className="text-sm text-cyan-100">{lang.level}</p>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Soft Skills */}
+                  <div className="space-y-4">
+                    <h3 className="text-xl font-bold text-pink-300 flex items-center gap-2">
+                      <Brain size={20} />
+                      Soft Skills
+                    </h3>
+                    <div className="space-y-2">
+                      {softSkills.map((skill, index) => (
+                        <motion.div
+                          key={skill}
+                          className="flex items-center gap-3 p-3 border border-pink-400/30 rounded-lg bg-black/20"
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: index * 0.1 }}
+                        >
+                          <div className="w-2 h-2 bg-pink-400 rounded-full"></div>
+                          <span className="text-cyan-100">{skill}</span>
                         </motion.div>
                       ))}
                     </div>

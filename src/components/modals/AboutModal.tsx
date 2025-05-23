@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { X, Globe, Heart, MapPin, Calendar, User, Phone } from 'lucide-react';
+import { X, Heart, MapPin, Calendar, User, Phone } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface AboutModalProps {
@@ -16,11 +16,6 @@ const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
     { icon: Phone, label: "Téléphone", value: "07.86.42.23.77" }
   ];
 
-  const languages = [
-    { name: "Anglais", level: "Très bon niveau", color: "cyan" },
-    { name: "Espagnol", level: "Notions", color: "purple" }
-  ];
-
   const interests = [
     { icon: Heart, name: "Modélisation 3D", details: "Unity, Blender, Sketchup, SolidWorks" },
     { icon: Heart, name: "Jeux vidéo", details: "Passion gaming" },
@@ -30,12 +25,6 @@ const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
 
   const sports = [
     "Natation", "Airsoft", "Golf", "Tennis", "Plongée", "Équitation"
-  ];
-
-  const softSkills = [
-    "Adaptation rapide",
-    "Organisation de projet et d'équipe", 
-    "Gestion du stock et du matériel"
   ];
 
   return (
@@ -115,28 +104,6 @@ const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
                       ))}
                     </div>
                   </div>
-                  
-                  {/* Langues */}
-                  <div className="space-y-4">
-                    <h3 className="text-xl font-bold text-cyan-300 flex items-center gap-2">
-                      <Globe size={20} />
-                      Langues
-                    </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {languages.map((lang, index) => (
-                        <motion.div
-                          key={lang.name}
-                          className={`p-4 border border-${lang.color}-400/30 rounded-lg bg-black/20`}
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: index * 0.1 }}
-                        >
-                          <h4 className={`text-${lang.color}-300 font-bold`}>{lang.name}</h4>
-                          <p className="text-sm text-cyan-100">{lang.level}</p>
-                        </motion.div>
-                      ))}
-                    </div>
-                  </div>
 
                   {/* Centres d'intérêt */}
                   <div className="space-y-4">
@@ -171,25 +138,6 @@ const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
                         <span key={sport} className="px-3 py-1 text-sm bg-cyan-500/20 text-cyan-300 rounded-full border border-cyan-400/30">
                           {sport}
                         </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Soft Skills */}
-                  <div className="space-y-4">
-                    <h3 className="text-xl font-bold text-pink-300">Soft Skills</h3>
-                    <div className="space-y-2">
-                      {softSkills.map((skill, index) => (
-                        <motion.div
-                          key={skill}
-                          className="flex items-center gap-3 p-3 border border-pink-400/30 rounded-lg bg-black/20"
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: index * 0.1 }}
-                        >
-                          <div className="w-2 h-2 bg-pink-400 rounded-full"></div>
-                          <span className="text-cyan-100">{skill}</span>
-                        </motion.div>
                       ))}
                     </div>
                   </div>
