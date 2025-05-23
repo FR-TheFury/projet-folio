@@ -1,6 +1,7 @@
 
 import React from 'react';
-import { motion } from 'framer-motion';
+import { X, Award, Calendar, ExternalLink } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface CertificationModalProps {
   isOpen: boolean;
@@ -8,122 +9,133 @@ interface CertificationModalProps {
 }
 
 const CertificationModal: React.FC<CertificationModalProps> = ({ isOpen, onClose }) => {
-  if (!isOpen) return null;
-
   const certifications = [
     {
+      title: "React Developer Certification",
+      issuer: "Meta",
+      date: "2024",
+      status: "En cours",
+      description: "Certification officielle Meta pour le développement React"
+    },
+    {
       title: "JavaScript Algorithms and Data Structures",
-      issuer: "freeCodeCamp",
-      date: "2024",
+      issuer: "FreeCodeCamp",
+      date: "2023",
       status: "Obtenu",
-      description: "Certification complète en algorithmes JavaScript et structures de données.",
-      badge: "🏆"
+      description: "Certification en algorithmique et structures de données JavaScript"
     },
     {
-      title: "React Developer",
-      issuer: "Meta (Facebook)",
-      date: "2024",
-      status: "En cours",
-      description: "Certification officielle Meta pour le développement React.",
-      badge: "⚛️"
-    },
-    {
-      title: "AWS Cloud Practitioner",
-      issuer: "Amazon Web Services",
-      date: "2024",
-      status: "Planifié",
-      description: "Certification fondamentale pour les services cloud AWS.",
-      badge: "☁️"
-    },
-    {
-      title: "BTS SIO SLAM",
-      issuer: "Éducation Nationale",
-      date: "2025",
-      status: "En cours",
-      description: "Diplôme d'État en Services Informatiques aux Organisations.",
-      badge: "🎓"
+      title: "Responsive Web Design",
+      issuer: "FreeCodeCamp",
+      date: "2023",
+      status: "Obtenu",
+      description: "Certification en design web responsive et accessibilité"
     }
   ];
 
   return (
-    <motion.div 
-      className="modal"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      onClick={onClose}
-    >
-      <motion.div 
-        className="modal-content w-full max-w-4xl"
-        initial={{ rotateY: -90 }}
-        animate={{ rotateY: 0 }}
-        exit={{ rotateY: 90 }}
-        transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">
-            Certifications & Diplômes
-          </h2>
-          <button 
-            onClick={onClose}
-            className="text-gray-400 hover:text-white text-2xl transition-colors"
-          >
-            ✕
-          </button>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {certifications.map((cert, index) => (
-            <motion.div
-              key={index}
-              className="project-card"
-              initial={{ opacity: 0, rotateX: -90 }}
-              animate={{ opacity: 1, rotateX: 0 }}
-              transition={{ delay: index * 0.15, duration: 0.5 }}
-            >
-              <div className="flex items-start justify-between mb-4">
-                <div className="text-4xl">{cert.badge}</div>
-                <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                  cert.status === 'Obtenu' ? 'bg-green-600/30 text-green-300 border border-green-500/30' :
-                  cert.status === 'En cours' ? 'bg-blue-600/30 text-blue-300 border border-blue-500/30' :
-                  'bg-yellow-600/30 text-yellow-300 border border-yellow-500/30'
-                }`}>
-                  {cert.status}
-                </span>
-              </div>
-              
-              <h3 className="text-xl font-semibold text-white mb-2">{cert.title}</h3>
-              <p className="text-blue-400 font-medium mb-2">{cert.issuer}</p>
-              <p className="text-sm text-gray-400 mb-3">{cert.date}</p>
-              <p className="text-gray-300 text-sm">{cert.description}</p>
-              
-              {cert.status === 'Obtenu' && (
-                <div className="mt-4 pt-3 border-t border-gray-700">
-                  <button className="text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium">
-                    Voir le certificat →
-                  </button>
-                </div>
-              )}
-            </motion.div>
-          ))}
-        </div>
-
-        <motion.div 
-          className="mt-8 p-6 bg-gradient-to-r from-green-600/20 to-blue-600/20 rounded-lg border border-green-500/30"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8 }}
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
         >
-          <h3 className="text-xl font-semibold text-white mb-3">🎯 Objectifs de Certification</h3>
-          <p className="text-gray-300">
-            Mon parcours de certification vise à valider mes compétences techniques et à rester à jour 
-            avec les dernières technologies. Ces certifications me permettent de démontrer mon expertise 
-            et mon engagement envers l'excellence professionnelle dans le développement web et les technologies cloud.
-          </p>
+          {/* Backdrop */}
+          <motion.div
+            className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+            onClick={onClose}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          />
+          
+          {/* Modal */}
+          <motion.div
+            className="relative w-full max-w-3xl max-h-[80vh] overflow-y-auto"
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.8, opacity: 0 }}
+            transition={{ type: "spring", damping: 20 }}
+          >
+            <div className="relative">
+              {/* Glow effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 rounded-xl blur-md opacity-75"></div>
+              
+              {/* Main content */}
+              <div className="relative bg-black/90 backdrop-blur-md border border-cyan-400/50 rounded-xl p-8">
+                {/* Close button */}
+                <button
+                  onClick={onClose}
+                  className="absolute top-4 right-4 text-cyan-300 hover:text-white transition-colors z-10"
+                >
+                  <X size={24} />
+                </button>
+                
+                {/* Corner accents */}
+                <div className="absolute -top-1 -left-1 w-4 h-4 border-t-2 border-l-2 border-cyan-400"></div>
+                <div className="absolute -top-1 -right-1 w-4 h-4 border-t-2 border-r-2 border-cyan-400"></div>
+                <div className="absolute -bottom-1 -left-1 w-4 h-4 border-b-2 border-l-2 border-cyan-400"></div>
+                <div className="absolute -bottom-1 -right-1 w-4 h-4 border-b-2 border-r-2 border-cyan-400"></div>
+                
+                {/* Content */}
+                <div className="space-y-6">
+                  <h2 className="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent font-mono">
+                    Certifications
+                  </h2>
+                  
+                  <div className="space-y-4">
+                    {certifications.map((cert, index) => (
+                      <motion.div
+                        key={cert.title}
+                        className="p-6 border border-cyan-400/30 rounded-lg bg-black/30"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                      >
+                        <div className="flex justify-between items-start mb-4">
+                          <div className="flex items-start gap-3">
+                            <div className="p-2 bg-yellow-500/20 rounded-lg">
+                              <Award className="text-yellow-300" size={20} />
+                            </div>
+                            <div>
+                              <h3 className="text-xl font-bold text-cyan-300 mb-1">{cert.title}</h3>
+                              <p className="text-purple-300 font-medium">{cert.issuer}</p>
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <div className="flex items-center gap-1 text-sm text-cyan-100 mb-2">
+                              <Calendar size={14} />
+                              {cert.date}
+                            </div>
+                            <span className={`px-3 py-1 text-xs rounded-full ${
+                              cert.status === 'Obtenu' ? 'bg-green-500/20 text-green-300' :
+                              'bg-yellow-500/20 text-yellow-300'
+                            }`}>
+                              {cert.status}
+                            </span>
+                          </div>
+                        </div>
+                        
+                        <p className="text-cyan-100 mb-4">{cert.description}</p>
+                        
+                        {cert.status === 'Obtenu' && (
+                          <button className="flex items-center gap-2 px-3 py-1 text-sm border border-cyan-400/50 text-cyan-300 hover:bg-cyan-400/10 transition-colors rounded">
+                            <ExternalLink size={16} />
+                            Voir le certificat
+                          </button>
+                        )}
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </motion.div>
-      </motion.div>
-    </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 

@@ -1,7 +1,7 @@
 
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { useToast } from '@/hooks/use-toast';
+import React from 'react';
+import { X, Mail, Phone, MapPin, Github, Linkedin } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -9,206 +9,113 @@ interface ContactModalProps {
 }
 
 const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const { toast } = useToast();
-
-  if (!isOpen) return null;
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      const response = await fetch('https://formcarry.com/s/A39-hd2aDf', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData)
-      });
-
-      if (response.ok) {
-        toast({
-          title: "Message envoyé !",
-          description: "Votre message a été envoyé avec succès. Je vous répondrai rapidement.",
-        });
-        setFormData({ name: '', email: '', subject: '', message: '' });
-      } else {
-        throw new Error('Erreur lors de l\'envoi');
-      }
-    } catch (error) {
-      toast({
-        title: "Erreur",
-        description: "Une erreur est survenue lors de l'envoi du message.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
+  const contacts = [
+    { icon: Mail, label: "Email", value: "teo.debay@example.com", link: "mailto:teo.debay@example.com" },
+    { icon: Phone, label: "Téléphone", value: "+33 6 12 34 56 78", link: "tel:+33612345678" },
+    { icon: MapPin, label: "Localisation", value: "France", link: null },
+    { icon: Github, label: "GitHub", value: "github.com/teodebay", link: "https://github.com/teodebay" },
+    { icon: Linkedin, label: "LinkedIn", value: "linkedin.com/in/teodebay", link: "https://linkedin.com/in/teodebay" }
+  ];
 
   return (
-    <motion.div 
-      className="modal"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      onClick={onClose}
-    >
-      <motion.div 
-        className="modal-content w-full max-w-2xl"
-        initial={{ y: '100%' }}
-        animate={{ y: 0 }}
-        exit={{ y: '100%' }}
-        transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">
-            Contactez-moi
-          </h2>
-          <button 
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          {/* Backdrop */}
+          <motion.div
+            className="absolute inset-0 bg-black/80 backdrop-blur-sm"
             onClick={onClose}
-            className="text-gray-400 hover:text-white text-2xl transition-colors"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          />
+          
+          {/* Modal */}
+          <motion.div
+            className="relative w-full max-w-2xl max-h-[80vh] overflow-y-auto"
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.8, opacity: 0 }}
+            transition={{ type: "spring", damping: 20 }}
           >
-            ✕
-          </button>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div>
-            <h3 className="text-xl font-semibold text-white mb-4">Informations de contact</h3>
-            <div className="space-y-4">
-              <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-blue-600/30 rounded-full flex items-center justify-center">
-                  📧
+            <div className="relative">
+              {/* Glow effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 rounded-xl blur-md opacity-75"></div>
+              
+              {/* Main content */}
+              <div className="relative bg-black/90 backdrop-blur-md border border-cyan-400/50 rounded-xl p-8">
+                {/* Close button */}
+                <button
+                  onClick={onClose}
+                  className="absolute top-4 right-4 text-cyan-300 hover:text-white transition-colors z-10"
+                >
+                  <X size={24} />
+                </button>
+                
+                {/* Corner accents */}
+                <div className="absolute -top-1 -left-1 w-4 h-4 border-t-2 border-l-2 border-cyan-400"></div>
+                <div className="absolute -top-1 -right-1 w-4 h-4 border-t-2 border-r-2 border-cyan-400"></div>
+                <div className="absolute -bottom-1 -left-1 w-4 h-4 border-b-2 border-l-2 border-cyan-400"></div>
+                <div className="absolute -bottom-1 -right-1 w-4 h-4 border-b-2 border-r-2 border-cyan-400"></div>
+                
+                {/* Content */}
+                <div className="space-y-6">
+                  <h2 className="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent font-mono">
+                    Me Contacter
+                  </h2>
+                  
+                  <p className="text-cyan-100 text-lg">
+                    N'hésitez pas à me contacter pour discuter de projets, d'opportunités ou simplement pour échanger sur les technologies spatiales !
+                  </p>
+                  
+                  <div className="space-y-4">
+                    {contacts.map((contact, index) => (
+                      <motion.div
+                        key={contact.label}
+                        className="flex items-center gap-4 p-4 border border-cyan-400/30 rounded-lg bg-black/30 hover:bg-black/50 transition-colors"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                      >
+                        <div className="p-2 bg-cyan-400/20 rounded-lg">
+                          <contact.icon className="text-cyan-300" size={20} />
+                        </div>
+                        <div className="flex-1">
+                          <p className="text-sm text-cyan-300 font-medium">{contact.label}</p>
+                          {contact.link ? (
+                            <a 
+                              href={contact.link}
+                              className="text-cyan-100 hover:text-white transition-colors"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {contact.value}
+                            </a>
+                          ) : (
+                            <p className="text-cyan-100">{contact.value}</p>
+                          )}
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                  
+                  <div className="pt-6 border-t border-cyan-400/30">
+                    <p className="text-center text-cyan-300 text-sm">
+                      Disponible pour des stages et projets freelance
+                    </p>
+                  </div>
                 </div>
-                <span className="text-gray-300">teo.debay@email.com</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-blue-600/30 rounded-full flex items-center justify-center">
-                  📱
-                </div>
-                <span className="text-gray-300">+33 6 XX XX XX XX</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-blue-600/30 rounded-full flex items-center justify-center">
-                  📍
-                </div>
-                <span className="text-gray-300">France</span>
               </div>
             </div>
-
-            <div className="mt-8">
-              <h4 className="text-lg font-semibold text-white mb-4">Réseaux sociaux</h4>
-              <div className="flex space-x-4">
-                {[
-                  { name: 'LinkedIn', icon: '💼' },
-                  { name: 'GitHub', icon: '💻' },
-                  { name: 'Twitter', icon: '🐦' }
-                ].map((social, index) => (
-                  <motion.button
-                    key={index}
-                    className="w-12 h-12 bg-gradient-to-r from-blue-600/30 to-purple-600/30 rounded-full flex items-center justify-center border border-blue-500/30 hover:border-blue-400 transition-colors"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                  >
-                    {social.icon}
-                  </motion.button>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <form onSubmit={handleSubmit} className="contact-form">
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Nom complet
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="form-input"
-                  placeholder="Votre nom"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="form-input"
-                  placeholder="votre@email.com"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Sujet
-                </label>
-                <input
-                  type="text"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  required
-                  className="form-input"
-                  placeholder="Sujet de votre message"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Message
-                </label>
-                <textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  rows={4}
-                  className="form-input resize-none"
-                  placeholder="Votre message..."
-                />
-              </div>
-
-              <motion.button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full nav-button disabled:opacity-50 disabled:cursor-not-allowed"
-                whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
-                whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
-              >
-                {isSubmitting ? 'Envoi en cours...' : 'Envoyer le message'}
-              </motion.button>
-            </div>
-          </form>
-        </div>
-      </motion.div>
-    </motion.div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 

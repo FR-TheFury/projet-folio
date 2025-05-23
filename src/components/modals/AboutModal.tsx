@@ -1,6 +1,7 @@
 
 import React from 'react';
-import { motion } from 'framer-motion';
+import { X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface AboutModalProps {
   isOpen: boolean;
@@ -8,123 +9,99 @@ interface AboutModalProps {
 }
 
 const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
-  if (!isOpen) return null;
-
   return (
-    <motion.div 
-      className="modal"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      onClick={onClose}
-    >
-      <motion.div 
-        className="modal-content w-full max-w-4xl"
-        initial={{ x: '100%' }}
-        animate={{ x: 0 }}
-        exit={{ x: '100%' }}
-        transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">
-            À Propos de Moi
-          </h2>
-          <button 
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          {/* Backdrop */}
+          <motion.div
+            className="absolute inset-0 bg-black/80 backdrop-blur-sm"
             onClick={onClose}
-            className="text-gray-400 hover:text-white text-2xl transition-colors"
-          >
-            ✕
-          </button>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div>
-            <motion.img 
-              src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=400&fit=crop"
-              alt="Téo Debay"
-              className="w-full rounded-lg mb-6"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.3 }}
-            />
-          </div>
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          />
           
-          <div className="space-y-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-            >
-              <h3 className="text-2xl font-semibold text-white mb-4">Qui suis-je ?</h3>
-              <p className="text-gray-300 leading-relaxed">
-                Passionné par le développement web et l'espace, je suis un développeur full-stack 
-                en formation BTS SIO option SLAM. Mon fascination pour les technologies spatiales 
-                influence mon approche du développement, où je cherche constamment à repousser 
-                les limites et à créer des expériences utilisateur exceptionnelles.
-              </p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-            >
-              <h3 className="text-xl font-semibold text-white mb-3">Compétences Techniques</h3>
-              <div className="space-y-3">
-                {[
-                  { skill: 'JavaScript / TypeScript', level: 90 },
-                  { skill: 'React / Next.js', level: 85 },
-                  { skill: 'PHP / Laravel', level: 80 },
-                  { skill: 'Python', level: 75 },
-                  { skill: 'Base de données', level: 80 },
-                  { skill: 'DevOps', level: 70 }
-                ].map((item, index) => (
-                  <div key={index}>
-                    <div className="flex justify-between text-sm mb-1">
-                      <span className="text-gray-300">{item.skill}</span>
-                      <span className="text-blue-400">{item.level}%</span>
-                    </div>
-                    <div className="w-full bg-gray-700 rounded-full h-2">
-                      <motion.div 
-                        className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full"
-                        initial={{ width: 0 }}
-                        animate={{ width: `${item.level}%` }}
-                        transition={{ delay: 0.6 + index * 0.1, duration: 0.8 }}
-                      />
+          {/* Modal */}
+          <motion.div
+            className="relative w-full max-w-2xl max-h-[80vh] overflow-y-auto"
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.8, opacity: 0 }}
+            transition={{ type: "spring", damping: 20 }}
+          >
+            <div className="relative">
+              {/* Glow effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 rounded-xl blur-md opacity-75"></div>
+              
+              {/* Main content */}
+              <div className="relative bg-black/90 backdrop-blur-md border border-cyan-400/50 rounded-xl p-8">
+                {/* Close button */}
+                <button
+                  onClick={onClose}
+                  className="absolute top-4 right-4 text-cyan-300 hover:text-white transition-colors z-10"
+                >
+                  <X size={24} />
+                </button>
+                
+                {/* Corner accents */}
+                <div className="absolute -top-1 -left-1 w-4 h-4 border-t-2 border-l-2 border-cyan-400"></div>
+                <div className="absolute -top-1 -right-1 w-4 h-4 border-t-2 border-r-2 border-cyan-400"></div>
+                <div className="absolute -bottom-1 -left-1 w-4 h-4 border-b-2 border-l-2 border-cyan-400"></div>
+                <div className="absolute -bottom-1 -right-1 w-4 h-4 border-b-2 border-r-2 border-cyan-400"></div>
+                
+                {/* Content */}
+                <div className="space-y-6">
+                  <h2 className="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent font-mono">
+                    À propos de moi
+                  </h2>
+                  
+                  <div className="space-y-4 text-cyan-100">
+                    <p className="text-lg leading-relaxed">
+                      Passionné par le développement web et les technologies spatiales, je suis un développeur full-stack 
+                      en formation qui aime créer des expériences numériques innovantes.
+                    </p>
+                    
+                    <p className="leading-relaxed">
+                      Mon parcours combine formation technique et passion pour l'exploration spatiale. 
+                      J'ai développé des compétences en React, Node.js, et diverses technologies modernes 
+                      tout en gardant un œil sur les innovations dans le secteur spatial.
+                    </p>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                      <div className="p-4 border border-cyan-400/30 rounded-lg">
+                        <h3 className="text-cyan-300 font-bold mb-2">🚀 Technologies</h3>
+                        <ul className="text-sm space-y-1">
+                          <li>React / Next.js</li>
+                          <li>Node.js / Express</li>
+                          <li>TypeScript</li>
+                          <li>Tailwind CSS</li>
+                        </ul>
+                      </div>
+                      
+                      <div className="p-4 border border-purple-400/30 rounded-lg">
+                        <h3 className="text-purple-300 font-bold mb-2">🌌 Passions</h3>
+                        <ul className="text-sm space-y-1">
+                          <li>Exploration spatiale</li>
+                          <li>Innovation technologique</li>
+                          <li>UI/UX Design</li>
+                          <li>Science-fiction</li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
-                ))}
+                </div>
               </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-            >
-              <h3 className="text-xl font-semibold text-white mb-3">Passions</h3>
-              <div className="grid grid-cols-2 gap-4">
-                {[
-                  { icon: '🚀', title: 'Espace' },
-                  { icon: '💻', title: 'Développement' },
-                  { icon: '🎮', title: 'Gaming' },
-                  { icon: '📱', title: 'Tech' }
-                ].map((passion, index) => (
-                  <div 
-                    key={index}
-                    className="bg-gradient-to-r from-blue-600/20 to-purple-600/20 p-3 rounded-lg border border-blue-500/30 text-center"
-                  >
-                    <div className="text-2xl mb-1">{passion.icon}</div>
-                    <div className="text-sm text-gray-300">{passion.title}</div>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </motion.div>
-    </motion.div>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 
