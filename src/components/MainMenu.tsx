@@ -114,7 +114,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
           transition={{ delay: 1.4, duration: 0.8 }}
         >
           <a
-            href="mailto:teodebaysio@gmail.com"
+            href="mailto:teodebaypro@gmail.com"
             className="flex items-center gap-2 px-6 py-3 border border-cyan-400/50 rounded-lg hover:bg-cyan-400/10 transition-colors text-cyan-300 hover:text-white"
           >
             <Mail size={16} />
