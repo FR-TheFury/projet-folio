@@ -103,17 +103,17 @@ const CertificationModal: React.FC<CertificationModalProps> = ({ isOpen, onClose
                   {certifications.map((cert, index) => (
                     <motion.div
                       key={cert.title}
-                      className={`p-6 border border-${cert.color}-400/30 rounded-lg bg-black/30 hover:bg-black/50 transition-colors`}
+                      className="p-6 border border-cyan-400/30 rounded-lg bg-black/30 hover:bg-black/50 transition-colors"
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}
                     >
                       <div className="flex items-start gap-4 mb-4">
-                        <div className={`p-3 bg-${cert.color}-500/20 rounded-lg`}>
-                          <cert.icon className={`text-${cert.color}-300`} size={24} />
+                        <div className="p-3 bg-cyan-500/20 rounded-lg">
+                          <cert.icon className="text-cyan-300" size={24} />
                         </div>
                         <div className="flex-1">
-                          <h3 className={`text-xl font-bold text-${cert.color}-300 mb-1`}>{cert.title}</h3>
+                          <h3 className="text-xl font-bold text-cyan-300 mb-1">{cert.title}</h3>
                           <p className="text-purple-300 font-medium text-sm">{cert.issuer}</p>
                         </div>
                         <span className="px-3 py-1 text-xs bg-green-500/20 text-green-300 rounded-full">
@@ -124,8 +124,13 @@ const CertificationModal: React.FC<CertificationModalProps> = ({ isOpen, onClose
                       <p className="text-cyan-100 text-sm leading-relaxed">{cert.description}</p>
                       
                       <div className="mt-4 pt-4 border-t border-cyan-400/20">
-                        <div className={`w-full bg-${cert.color}-500/20 rounded-full h-2`}>
-                          <div className={`bg-${cert.color}-400 h-2 rounded-full w-full`}></div>
+                        <div className="w-full bg-gray-700 rounded-full h-2">
+                          <motion.div 
+                            className="bg-cyan-400 h-2 rounded-full"
+                            initial={{ width: 0 }}
+                            animate={{ width: "100%" }}
+                            transition={{ delay: index * 0.2 + 0.5, duration: 1 }}
+                          ></motion.div>
                         </div>
                         <p className="text-xs text-cyan-300 mt-2">Certification validée</p>
                       </div>

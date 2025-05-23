@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { MapPin, Calendar, User, Phone, Mail, Linkedin } from 'lucide-react';
 
 interface MainMenuProps {
   onOpenModal: (modalType: string) => void;
@@ -9,7 +10,7 @@ interface MainMenuProps {
 const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
   const menuItems = [
     { id: 'projects', label: 'Projets', position: 'top-12 left-12', icon: '🚀' },
-    { id: 'experience', label: 'Stage & BTS', position: 'top-12 right-12', icon: '🎓' },
+    { id: 'experience', label: 'Expériences', position: 'top-12 right-12', icon: '🎓' },
     { id: 'about', label: 'À propos', position: 'bottom-12 left-12', icon: '👨‍💻' },
     { id: 'contact', label: 'Contact', position: 'bottom-12 right-12', icon: '📡' },
     { id: 'rss', label: 'Flux RSS', position: 'top-1/2 left-12 -translate-y-1/2', icon: '📊' },
@@ -25,7 +26,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
           onClick={() => onOpenModal(item.id)}
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: index * 0.15 + 2, duration: 0.5 }}
+          transition={{ delay: index * 0.15 + 1, duration: 0.5 }}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
         >
@@ -50,12 +51,12 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
         </motion.button>
       ))}
       
-      {/* Central Logo/Name */}
+      {/* Central Logo/Name avec informations */}
       <motion.div 
         className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center z-10"
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 1.5, duration: 1 }}
+        transition={{ delay: 0.5, duration: 1 }}
       >
         <motion.h1 
           className="text-6xl md:text-8xl font-bold bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent mb-4 font-mono tracking-wider"
@@ -70,22 +71,58 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
         >
           TÉO DEBAY
         </motion.h1>
-        <motion.p 
-          className="text-xl md:text-2xl text-cyan-300 font-light mb-2 font-mono tracking-wide"
+        
+        {/* Informations personnelles centrales */}
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8 max-w-2xl mx-auto"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 2 }}
+          transition={{ delay: 1.2, duration: 0.8 }}
         >
-          Développeur Web Full-Stack
-        </motion.p>
-        <motion.p 
-          className="text-lg text-purple-400 font-mono tracking-wide"
+          <div className="flex items-center justify-center gap-2 text-cyan-200">
+            <Calendar size={18} />
+            <span>08/05/2004</span>
+          </div>
+          <div className="flex items-center justify-center gap-2 text-cyan-200">
+            <User size={18} />
+            <span>Célibataire, Permis B</span>
+          </div>
+          <div className="flex items-center justify-center gap-2 text-cyan-200">
+            <MapPin size={18} />
+            <span>Ham-en-Artois, 62190</span>
+          </div>
+          <div className="flex items-center justify-center gap-2 text-cyan-200">
+            <Phone size={18} />
+            <a href="tel:0786422377" className="hover:text-white transition-colors">
+              07.86.42.23.77
+            </a>
+          </div>
+        </motion.div>
+
+        {/* Liens de contact */}
+        <motion.div
+          className="flex justify-center gap-6 mt-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 2.2 }}
+          transition={{ delay: 1.4, duration: 0.8 }}
         >
-          Passionné d'Espace & Technologies
-        </motion.p>
+          <a
+            href="mailto:teodebaysio@gmail.com"
+            className="flex items-center gap-2 px-4 py-2 border border-cyan-400/50 rounded-lg hover:bg-cyan-400/10 transition-colors text-cyan-300"
+          >
+            <Mail size={16} />
+            Email
+          </a>
+          <a
+            href="https://linkedin.com/in/teo-debay"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-4 py-2 border border-purple-400/50 rounded-lg hover:bg-purple-400/10 transition-colors text-purple-300"
+          >
+            <Linkedin size={16} />
+            LinkedIn
+          </a>
+        </motion.div>
         
         {/* Decorative elements */}
         <motion.div 

@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { X, Globe, Heart, Code, Gamepad2, Music, Plane } from 'lucide-react';
+import { X, Globe, Heart, Code, Gamepad2, Music, Plane, Zap } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface AboutModalProps {
@@ -12,6 +12,17 @@ const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
   const languages = [
     { name: "Anglais", level: "Très bon niveau", color: "cyan" },
     { name: "Espagnol", level: "Notions", color: "purple" }
+  ];
+
+  const devSkills = [
+    { name: "React", level: 95, color: "cyan" },
+    { name: "JavaScript", level: 90, color: "yellow" },
+    { name: "TypeScript", level: 85, color: "blue" },
+    { name: "HTML/CSS", level: 95, color: "orange" },
+    { name: "WordPress", level: 80, color: "purple" },
+    { name: "PrestaShop", level: 75, color: "pink" },
+    { name: "Unity", level: 70, color: "green" },
+    { name: "Blender", level: 65, color: "cyan" }
   ];
 
   const interests = [
@@ -51,7 +62,7 @@ const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
           
           {/* Modal */}
           <motion.div
-            className="relative w-full max-w-4xl max-h-[80vh] overflow-y-auto"
+            className="relative w-full max-w-6xl max-h-[90vh] overflow-y-auto"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
@@ -84,6 +95,38 @@ const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
                     des projets personnels innovants. J'ai aussi de l'expérience avec Prestashop et d'autres 
                     technologies web modernes.
                   </p>
+                  
+                  {/* Compétences de développement */}
+                  <div className="space-y-4">
+                    <h3 className="text-xl font-bold text-cyan-300 flex items-center gap-2">
+                      <Zap size={20} />
+                      Compétences de développement
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {devSkills.map((skill, index) => (
+                        <motion.div
+                          key={skill.name}
+                          className="p-4 border border-cyan-400/30 rounded-lg bg-black/20"
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: index * 0.1 }}
+                        >
+                          <div className="flex justify-between items-center mb-2">
+                            <h4 className="text-cyan-300 font-bold">{skill.name}</h4>
+                            <span className="text-sm text-cyan-100">{skill.level}%</span>
+                          </div>
+                          <div className="w-full bg-gray-700 rounded-full h-2">
+                            <motion.div 
+                              className={`bg-${skill.color}-400 h-2 rounded-full`}
+                              initial={{ width: 0 }}
+                              animate={{ width: `${skill.level}%` }}
+                              transition={{ delay: index * 0.1 + 0.5, duration: 1 }}
+                            ></motion.div>
+                          </div>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
                   
                   {/* Langues */}
                   <div className="space-y-4">
