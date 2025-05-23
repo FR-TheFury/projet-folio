@@ -42,21 +42,21 @@ const ParticleBackground: React.FC = () => {
               quantity: 4,
             },
             repulse: {
-              distance: 200,
+              distance: 100,
               duration: 0.4,
             },
           },
         },
         particles: {
           color: {
-            value: ["#3b82f6", "#8b5cf6", "#06b6d4", "#ec4899"],
+            value: ["#00ffff", "#ff00ff", "#ffff00", "#ff0080"],
           },
           links: {
-            color: "#3b82f6",
+            color: "#00ffff",
             distance: 150,
             enable: true,
-            opacity: 0.3,
-            width: 1,
+            opacity: 0.4,
+            width: 2,
           },
           collisions: {
             enable: true,
@@ -67,8 +67,8 @@ const ParticleBackground: React.FC = () => {
             outModes: {
               default: "bounce",
             },
-            random: false,
-            speed: 1,
+            random: true,
+            speed: 2,
             straight: false,
           },
           number: {
@@ -76,16 +76,16 @@ const ParticleBackground: React.FC = () => {
               enable: true,
               area: 800,
             },
-            value: 80,
+            value: 100,
           },
           opacity: {
-            value: 0.5,
+            value: 0.8,
           },
           shape: {
             type: "circle",
           },
           size: {
-            value: { min: 1, max: 5 },
+            value: { min: 1, max: 3 },
           },
         },
         detectRetina: true,
