@@ -10,6 +10,7 @@ import ContactModal from '@/components/modals/ContactModal';
 import ExperienceModal from '@/components/modals/ExperienceModal';
 import RSSModal from '@/components/modals/RSSModal';
 import CertificationModal from '@/components/modals/CertificationModal';
+import SkillsModal from '@/components/modals/SkillsModal';
 
 const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -53,6 +54,9 @@ const Index = () => {
       <AnimatePresence>
         {activeModal === 'projects' && (
           <ProjectsModal isOpen={true} onClose={closeModal} />
+        )}
+        {activeModal === 'skills' && (
+          <SkillsModal isOpen={true} onClose={closeModal} />
         )}
         {activeModal === 'about' && (
           <AboutModal isOpen={true} onClose={closeModal} />

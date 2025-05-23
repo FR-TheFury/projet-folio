@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, Calendar, User, Phone, Mail, Linkedin } from 'lucide-react';
+import { Mail, Linkedin } from 'lucide-react';
 
 interface MainMenuProps {
   onOpenModal: (modalType: string) => void;
@@ -10,11 +10,12 @@ interface MainMenuProps {
 const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
   const menuItems = [
     { id: 'projects', label: 'Projets', position: 'top-4 left-4 md:top-12 md:left-12', icon: '🚀' },
-    { id: 'experience', label: 'Expériences', position: 'top-4 right-4 md:top-12 md:right-12', icon: '🎓' },
+    { id: 'skills', label: 'Compétences', position: 'top-4 right-4 md:top-12 md:right-12', icon: '⚡' },
+    { id: 'experience', label: 'Expériences', position: 'top-1/2 left-4 -translate-y-1/2 md:left-12', icon: '🎓' },
     { id: 'about', label: 'À propos', position: 'bottom-4 left-4 md:bottom-12 md:left-12', icon: '👨‍💻' },
     { id: 'contact', label: 'Contact', position: 'bottom-4 right-4 md:bottom-12 md:right-12', icon: '📡' },
-    { id: 'rss', label: 'Flux RSS', position: 'top-1/2 left-4 -translate-y-1/2 md:left-12', icon: '📊' },
-    { id: 'certification', label: 'Certification', position: 'top-1/2 right-4 -translate-y-1/2 md:right-12', icon: '🏆' },
+    { id: 'rss', label: 'Flux RSS', position: 'top-1/2 right-4 -translate-y-1/2 md:right-12', icon: '📊' },
+    { id: 'certification', label: 'Certification', position: 'bottom-1/2 left-1/2 -translate-x-1/2 translate-y-1/2 md:bottom-6 md:left-1/2', icon: '🏆' },
   ];
 
   return (
@@ -89,40 +90,6 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
           <p className="text-sm sm:text-base md:text-lg text-cyan-300 font-medium">
             Sérieux • Volontaire • Motivé • Curieux
           </p>
-        </motion.div>
-        
-        {/* Informations personnelles - empilées verticalement sur mobile */}
-        <motion.div
-          className="flex flex-col space-y-4 md:space-y-6 mb-6 md:mb-8"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.2, duration: 0.8 }}
-        >
-          {/* Première ligne - Date et statut */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-8">
-            <div className="flex items-center gap-2 text-cyan-200 text-sm md:text-base">
-              <Calendar size={16} className="md:w-[18px] md:h-[18px]" />
-              <span>08/05/2004</span>
-            </div>
-            <div className="flex items-center gap-2 text-cyan-200 text-sm md:text-base">
-              <User size={16} className="md:w-[18px] md:h-[18px]" />
-              <span>Célibataire, Permis B</span>
-            </div>
-          </div>
-          
-          {/* Deuxième ligne - Lieu et téléphone */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-8">
-            <div className="flex items-center gap-2 text-cyan-200 text-sm md:text-base">
-              <MapPin size={16} className="md:w-[18px] md:h-[18px]" />
-              <span>Ham-en-Artois, 62190</span>
-            </div>
-            <div className="flex items-center gap-2 text-cyan-200 text-sm md:text-base">
-              <Phone size={16} className="md:w-[18px] md:h-[18px]" />
-              <a href="tel:0786422377" className="hover:text-white transition-colors">
-                07.86.42.23.77
-              </a>
-            </div>
-          </div>
         </motion.div>
 
         {/* Liens de contact */}

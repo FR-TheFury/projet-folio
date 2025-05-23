@@ -2,7 +2,6 @@
 import React from 'react';
 import { X, Mail, Phone, MapPin, Linkedin } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import ContactForm from '../ContactForm';
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -37,7 +36,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
           
           {/* Modal */}
           <motion.div
-            className="relative w-full max-w-6xl max-h-[90vh] overflow-y-auto"
+            className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
@@ -64,47 +63,38 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
                   Me Contacter
                 </h2>
                 
-                {/* Formulaire de contact en haut */}
-                <div className="mb-8">
-                  <div className="max-w-2xl mx-auto">
-                    <h3 className="text-xl font-bold text-purple-300 mb-6 text-center">Envoyez-moi un message</h3>
-                    <ContactForm />
-                  </div>
-                </div>
-                
-                {/* Informations de contact en bas */}
                 <div className="space-y-6">
                   <div className="text-center">
                     <p className="text-cyan-100 text-lg">
-                      Ou contactez-moi directement via mes coordonnées
+                      N'hésitez pas à me contacter pour toute opportunité professionnelle ou collaboration
                     </p>
                   </div>
                   
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
                     {contacts.map((contact, index) => (
                       <motion.div
                         key={contact.label}
-                        className="flex items-center gap-4 p-4 border border-cyan-400/30 rounded-lg bg-black/30 hover:bg-black/50 transition-colors"
+                        className="flex items-center gap-4 p-6 border border-cyan-400/30 rounded-lg bg-black/30 hover:bg-black/50 transition-colors"
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: index * 0.1 }}
                       >
-                        <div className="p-2 bg-cyan-400/20 rounded-lg">
-                          <contact.icon className="text-cyan-300" size={20} />
+                        <div className="p-3 bg-cyan-400/20 rounded-lg">
+                          <contact.icon className="text-cyan-300" size={24} />
                         </div>
                         <div className="flex-1">
-                          <p className="text-sm text-cyan-300 font-medium">{contact.label}</p>
+                          <p className="text-sm text-cyan-300 font-medium mb-1">{contact.label}</p>
                           {contact.link ? (
                             <a 
                               href={contact.link}
-                              className="text-cyan-100 hover:text-white transition-colors"
+                              className="text-cyan-100 hover:text-white transition-colors text-lg"
                               target="_blank"
                               rel="noopener noreferrer"
                             >
                               {contact.value}
                             </a>
                           ) : (
-                            <p className="text-cyan-100">{contact.value}</p>
+                            <p className="text-cyan-100 text-lg">{contact.value}</p>
                           )}
                         </div>
                       </motion.div>

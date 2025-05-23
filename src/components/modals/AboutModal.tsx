@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { X, Globe, Heart, Code, Gamepad2, Music, Plane, Zap } from 'lucide-react';
+import { X, Globe, Heart, MapPin, Calendar, User, Phone } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface AboutModalProps {
@@ -9,27 +9,23 @@ interface AboutModalProps {
 }
 
 const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
+  const personalInfo = [
+    { icon: Calendar, label: "Date de naissance", value: "08/05/2004" },
+    { icon: User, label: "Statut", value: "Célibataire, Permis B" },
+    { icon: MapPin, label: "Localisation", value: "Ham-en-Artois, 62190" },
+    { icon: Phone, label: "Téléphone", value: "07.86.42.23.77" }
+  ];
+
   const languages = [
     { name: "Anglais", level: "Très bon niveau", color: "cyan" },
     { name: "Espagnol", level: "Notions", color: "purple" }
   ];
 
-  const devSkills = [
-    { name: "React", level: 95, color: "cyan" },
-    { name: "JavaScript", level: 90, color: "yellow" },
-    { name: "TypeScript", level: 85, color: "blue" },
-    { name: "HTML/CSS", level: 95, color: "orange" },
-    { name: "WordPress", level: 80, color: "purple" },
-    { name: "PrestaShop", level: 75, color: "pink" },
-    { name: "Unity", level: 70, color: "green" },
-    { name: "Blender", level: 65, color: "cyan" }
-  ];
-
   const interests = [
-    { icon: Code, name: "Modélisation 3D", details: "Unity, Blender, Sketchup, SolidWorks" },
-    { icon: Gamepad2, name: "Jeux vidéo", details: "Passion gaming" },
-    { icon: Music, name: "Musique", details: "Écoute et création" },
-    { icon: Plane, name: "Voyages", details: "Grèce, Italie, Japon" }
+    { icon: Heart, name: "Modélisation 3D", details: "Unity, Blender, Sketchup, SolidWorks" },
+    { icon: Heart, name: "Jeux vidéo", details: "Passion gaming" },
+    { icon: Heart, name: "Musique", details: "Écoute et création" },
+    { icon: Heart, name: "Voyages", details: "Grèce, Italie, Japon" }
   ];
 
   const sports = [
@@ -96,32 +92,24 @@ const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
                     technologies web modernes.
                   </p>
                   
-                  {/* Compétences de développement */}
+                  {/* Informations personnelles */}
                   <div className="space-y-4">
-                    <h3 className="text-xl font-bold text-cyan-300 flex items-center gap-2">
-                      <Zap size={20} />
-                      Compétences de développement
-                    </h3>
+                    <h3 className="text-xl font-bold text-cyan-300">Informations personnelles</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {devSkills.map((skill, index) => (
+                      {personalInfo.map((info, index) => (
                         <motion.div
-                          key={skill.name}
-                          className="p-4 border border-cyan-400/30 rounded-lg bg-black/20"
+                          key={info.label}
+                          className="flex items-center gap-4 p-4 border border-cyan-400/30 rounded-lg bg-black/30"
                           initial={{ opacity: 0, x: -20 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: index * 0.1 }}
                         >
-                          <div className="flex justify-between items-center mb-2">
-                            <h4 className="text-cyan-300 font-bold">{skill.name}</h4>
-                            <span className="text-sm text-cyan-100">{skill.level}%</span>
+                          <div className="p-2 bg-cyan-400/20 rounded-lg">
+                            <info.icon className="text-cyan-300" size={20} />
                           </div>
-                          <div className="w-full bg-gray-700 rounded-full h-2">
-                            <motion.div 
-                              className={`bg-${skill.color}-400 h-2 rounded-full`}
-                              initial={{ width: 0 }}
-                              animate={{ width: `${skill.level}%` }}
-                              transition={{ delay: index * 0.1 + 0.5, duration: 1 }}
-                            ></motion.div>
+                          <div className="flex-1">
+                            <p className="text-sm text-cyan-300 font-medium">{info.label}</p>
+                            <p className="text-cyan-100">{info.value}</p>
                           </div>
                         </motion.div>
                       ))}
