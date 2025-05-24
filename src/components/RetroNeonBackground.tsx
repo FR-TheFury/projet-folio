@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
@@ -32,12 +33,12 @@ const CyberpunkFloor = () => {
   
   useFrame((state) => {
     if (floorRef.current) {
-      const pulse = Math.sin(state.clock.elapsedTime * 1.2) * 0.3 + 0.7;
-      const secondaryPulse = Math.sin(state.clock.elapsedTime * 0.8 + Math.PI) * 0.2 + 0.8;
+      const pulse = Math.sin(state.clock.elapsedTime * 1.2) * 0.4 + 0.8;
+      const secondaryPulse = Math.sin(state.clock.elapsedTime * 0.8 + Math.PI) * 0.3 + 0.9;
       
       floorRef.current.children.forEach((child, index) => {
         if (child instanceof THREE.Mesh && child.material instanceof THREE.Material) {
-          const intensity = index % 2 === 0 ? pulse * 1.2 : secondaryPulse * 0.8;
+          const intensity = index % 2 === 0 ? pulse * 1.8 : secondaryPulse * 1.2;
           (child.material as any).emissiveIntensity = intensity;
         }
       });
@@ -67,7 +68,7 @@ const CyberpunkFloor = () => {
       const isMainLine = i % 10 === 0;
       const isMajorLine = i % 20 === 0;
       const color = isMajorLine ? "#ff00ff" : (isMainLine ? "#00ffff" : "#004488");
-      const emissive = isMajorLine ? "#cc00cc" : (isMainLine ? "#00aaaa" : "#002266");
+      const emissive = isMajorLine ? "#ff00ff" : (isMainLine ? "#00ffff" : "#002266");
       
       elements.push(
         <mesh key={`h-${i}`} position={[0, -79.3, z]}>
@@ -77,7 +78,7 @@ const CyberpunkFloor = () => {
             transparent 
             opacity={isMajorLine ? 0.9 : (isMainLine ? 0.8 : 0.6)}
             emissive={emissive}
-            emissiveIntensity={0.6}
+            emissiveIntensity={isMajorLine ? 1.2 : (isMainLine ? 0.9 : 0.6)}
           />
         </mesh>
       );
@@ -88,7 +89,7 @@ const CyberpunkFloor = () => {
       const isMainLine = i % 10 === 0;
       const isMajorLine = i % 20 === 0;
       const color = isMajorLine ? "#00ffff" : (isMainLine ? "#ff00ff" : "#442288");
-      const emissive = isMajorLine ? "#00aaaa" : (isMainLine ? "#cc00cc" : "#221166");
+      const emissive = isMajorLine ? "#00ffff" : (isMainLine ? "#ff00ff" : "#221166");
       
       elements.push(
         <mesh key={`v-${i}`} position={[x, -79.3, 0]}>
@@ -98,7 +99,7 @@ const CyberpunkFloor = () => {
             transparent 
             opacity={isMajorLine ? 0.9 : (isMainLine ? 0.8 : 0.6)}
             emissive={emissive}
-            emissiveIntensity={0.6}
+            emissiveIntensity={isMajorLine ? 1.2 : (isMainLine ? 0.9 : 0.6)}
           />
         </mesh>
       );
@@ -117,6 +118,23 @@ const CyberpunkCity = () => {
   useFrame((state) => {
     if (cityRef.current) {
       cityRef.current.rotation.y = state.clock.elapsedTime * 0.005;
+      
+      // Add pulsing effect to building lights
+      const pulse = Math.sin(state.clock.elapsedTime * 2) * 0.5 + 1;
+      cityRef.current.children.forEach((building, index) => {
+        if (building instanceof THREE.Group) {
+          building.children.forEach((child) => {
+            if (child instanceof THREE.Mesh && child.material instanceof THREE.Material) {
+              const material = child.material as any;
+              if (material.emissive && material.emissiveIntensity) {
+                const baseIntensity = material.userData?.baseIntensity || material.emissiveIntensity;
+                material.userData.baseIntensity = baseIntensity;
+                material.emissiveIntensity = baseIntensity * (0.8 + pulse * 0.4);
+              }
+            }
+          });
+        }
+      });
     }
   });
 
@@ -155,7 +173,7 @@ const CyberpunkCity = () => {
               transparent
               opacity={0.8}
               emissive={primaryNeon}
-              emissiveIntensity={2.5}
+              emissiveIntensity={3.5}
             />
           </mesh>
           
@@ -166,13 +184,13 @@ const CyberpunkCity = () => {
               transparent
               opacity={0.9}
               emissive={secondaryNeon}
-              emissiveIntensity={3.5}
+              emissiveIntensity={4.5}
             />
           </mesh>
           
           {Array.from({ length: Math.floor(baseHeight / 8) }, (_, floor) => {
             const windowColor = Math.random() > 0.3 ? '#ffaa00' : '#004488';
-            const emissiveIntensity = Math.random() > 0.3 ? 2.5 : 1.5;
+            const emissiveIntensity = Math.random() > 0.3 ? 3.5 : 2.5;
             
             return (
               <group key={floor}>
@@ -197,7 +215,7 @@ const CyberpunkCity = () => {
               transparent
               opacity={0.7}
               emissive={primaryNeon}
-              emissiveIntensity={3}
+              emissiveIntensity={4}
             />
           </mesh>
         </group>
@@ -248,26 +266,26 @@ const CyberpunkLighting = () => {
   return (
     <>
       <fog attach="fog" args={['#1a0a2e', 80, 350]} />
-      <ambientLight intensity={0.3} color="#2a2a4a" />
-      <pointLight position={[0, 120, 0]} color="#ff00ff" intensity={8} distance={400} />
-      <pointLight position={[-80, 80, -80]} color="#00ffff" intensity={7} distance={300} />
-      <pointLight position={[80, 80, 80]} color="#ff0080" intensity={7} distance={300} />
-      <pointLight position={[0, 50, -120]} color="#8000ff" intensity={6} distance={250} />
-      <pointLight position={[-40, 60, 40]} color="#0080ff" intensity={5} distance={200} />
-      <pointLight position={[40, 60, -40]} color="#ff4080" intensity={5} distance={200} />
+      <ambientLight intensity={0.4} color="#2a2a4a" />
+      <pointLight position={[0, 120, 0]} color="#ff00ff" intensity={12} distance={400} />
+      <pointLight position={[-80, 80, -80]} color="#00ffff" intensity={10} distance={300} />
+      <pointLight position={[80, 80, 80]} color="#ff0080" intensity={10} distance={300} />
+      <pointLight position={[0, 50, -120]} color="#8000ff" intensity={8} distance={250} />
+      <pointLight position={[-40, 60, 40]} color="#0080ff" intensity={7} distance={200} />
+      <pointLight position={[40, 60, -40]} color="#ff4080" intensity={7} distance={200} />
       <directionalLight 
         position={[50, 100, 50]} 
         color="#aa88ff" 
-        intensity={2}
+        intensity={3}
         castShadow 
       />
       <directionalLight 
         position={[-50, 60, -50]} 
         color="#ff88aa" 
-        intensity={1.5}
+        intensity={2}
       />
       <hemisphereLight 
-        args={["#4a2a8a", "#1a0a3a", 0.6]}
+        args={["#4a2a8a", "#1a0a3a", 0.8]}
       />
     </>
   );
@@ -278,7 +296,7 @@ const RetroNeonBackground: React.FC = () => {
   const [effectsEnabled, setEffectsEnabled] = useState(true);
   const [cameraMovement, setCameraMovement] = useState<'orbital' | 'vertical' | 'mixed'>('mixed');
 
-  console.log("Rendering enhanced cyberpunk cityscape without post-processing");
+  console.log("Rendering enhanced cyberpunk cityscape with pure emissive materials");
 
   return (
     <>
@@ -295,7 +313,7 @@ const RetroNeonBackground: React.FC = () => {
             height: '100%',
             background: 'linear-gradient(180deg, #1a0a2e 0%, #16213e 25%, #0f3460 60%, #0a0a1a 100%)'
           }}
-          onCreated={() => console.log("Enhanced cyberpunk environment loaded")}
+          onCreated={() => console.log("Clean cyberpunk environment loaded without post-processing")}
         >
           <CyberpunkCamera movementType={cameraMovement} />
           <CyberpunkSkybox />
