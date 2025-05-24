@@ -8,7 +8,7 @@ const RetroNeonBackground: React.FC = () => {
     <div 
       className="fixed inset-0 z-[-1] w-full h-full bg-cover bg-center bg-no-repeat"
       style={{
-        backgroundImage: 'url(/background.jpeg)'
+        backgroundImage: 'url(./background.jpeg)'
       }}
     />
   );
