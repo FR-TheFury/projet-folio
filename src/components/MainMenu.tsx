@@ -53,13 +53,9 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
           </motion.button>
         ))}
         
-        {/* Bouton Certification centré avec une approche robuste */}
+        {/* Bouton Certification centré avec classes Tailwind */}
         <motion.button
-          className="fixed z-20 bottom-4 md:bottom-12 group"
-          style={{ 
-            left: '50%', 
-            transform: 'translateX(-50%)' 
-          }}
+          className="fixed z-20 bottom-4 md:bottom-12 left-1/2 -translate-x-1/2 group"
           onClick={() => onOpenModal('certification')}
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -179,43 +175,25 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
           Explorez mon univers technologique
         </motion.p>
         
-        {/* Decorative elements - plus grands et plus proches */}
+        {/* Decorative elements - 2 carrés en diagonal plus grands et proches */}
         <div className="hidden md:block">
           <motion.div 
-            className="absolute -top-8 -left-8 w-20 h-20 border-2 border-cyan-400/40 rotate-45"
+            className="absolute -top-12 -left-12 w-24 h-24 border-2 border-cyan-400/50 rotate-45"
             animate={{ 
               rotate: [45, 225, 45],
-              scale: [1, 1.1, 1],
-              opacity: [0.4, 0.8, 0.4]
-            }}
-            transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-          />
-          <motion.div 
-            className="absolute -top-6 -right-6 w-16 h-16 border-2 border-pink-400/40 rotate-45"
-            animate={{ 
-              rotate: [45, -135, 45],
               scale: [1, 1.2, 1],
-              opacity: [0.4, 0.9, 0.4]
+              opacity: [0.5, 0.9, 0.5]
             }}
             transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
           />
           <motion.div 
-            className="absolute -bottom-8 -right-8 w-18 h-18 border-2 border-yellow-400/40 rotate-45"
+            className="absolute -bottom-12 -right-12 w-24 h-24 border-2 border-pink-400/50 rotate-45"
             animate={{ 
-              rotate: [45, 180, 45],
-              scale: [1, 1.15, 1],
-              opacity: [0.4, 0.7, 0.4]
+              rotate: [45, -135, 45],
+              scale: [1, 1.2, 1],
+              opacity: [0.5, 0.9, 0.5]
             }}
-            transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-          />
-          <motion.div 
-            className="absolute -bottom-6 -left-6 w-14 h-14 border-2 border-purple-400/40 rotate-45"
-            animate={{ 
-              rotate: [45, -180, 45],
-              scale: [1, 1.3, 1],
-              opacity: [0.4, 0.8, 0.4]
-            }}
-            transition={{ duration: 7, repeat: Infinity, ease: "linear" }}
+            transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
           />
         </div>
       </motion.div>
