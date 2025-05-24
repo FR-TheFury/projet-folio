@@ -65,7 +65,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
         transition={{ delay: 0.5, duration: 1 }}
       >
         {/* Contour avec fond semi-transparent */}
-        <div className="relative bg-black/40 backdrop-blur-md border border-cyan-400/40 rounded-2xl p-6 md:p-12">
+        <div className="relative bg-black/60 backdrop-blur-md border border-cyan-400/60 rounded-2xl p-6 md:p-12">
           {/* Corner accents pour le contour principal */}
           <div className="absolute -top-1 -left-1 w-6 h-6 border-t-2 border-l-2 border-cyan-400/80"></div>
           <div className="absolute -top-1 -right-1 w-6 h-6 border-t-2 border-r-2 border-cyan-400/80"></div>
@@ -94,7 +94,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8 }}
           >
-            <p className="text-base sm:text-lg md:text-2xl text-white leading-relaxed font-semibold drop-shadow-[0_0_10px_rgba(0,0,0,0.8)]">
+            <p className="text-base sm:text-lg md:text-2xl text-gray-100 leading-relaxed font-semibold drop-shadow-[0_0_10px_rgba(0,0,0,0.8)]">
               Développeur Full Stack / Web Designer / Humain
             </p>
             <p className="text-sm sm:text-base md:text-lg text-gray-200 font-medium drop-shadow-[0_0_8px_rgba(0,0,0,0.8)]">
@@ -111,7 +111,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
           >
             <a
               href="mailto:teodebaypro@gmail.com"
-              className="flex items-center justify-center gap-2 px-4 md:px-6 py-2 md:py-3 border border-cyan-400/60 bg-black/40 rounded-lg hover:bg-cyan-400/20 transition-colors text-white hover:text-cyan-200 text-sm md:text-base font-semibold backdrop-blur-sm"
+              className="flex items-center justify-center gap-2 px-4 md:px-6 py-2 md:py-3 border border-cyan-400/60 bg-black/60 rounded-lg hover:bg-cyan-400/20 transition-colors text-gray-100 hover:text-cyan-200 text-sm md:text-base font-semibold backdrop-blur-sm"
             >
               <Mail size={14} className="md:w-4 md:h-4" />
               Email
@@ -120,7 +120,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
               href="https://linkedin.com/in/teo-debay"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 px-4 md:px-6 py-2 md:py-3 border border-purple-400/60 bg-black/40 rounded-lg hover:bg-purple-400/20 transition-colors text-white hover:text-purple-200 text-sm md:text-base font-semibold backdrop-blur-sm"
+              className="flex items-center justify-center gap-2 px-4 md:px-6 py-2 md:py-3 border border-purple-400/60 bg-black/60 rounded-lg hover:bg-purple-400/20 transition-colors text-gray-100 hover:text-purple-200 text-sm md:text-base font-semibold backdrop-blur-sm"
             >
               <Linkedin size={14} className="md:w-4 md:h-4" />
               LinkedIn
@@ -138,7 +138,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
               <button
                 key={item.id}
                 onClick={() => onOpenModal(item.id)}
-                className="flex items-center gap-1 px-3 py-2 bg-black/70 backdrop-blur-md border border-cyan-400/40 rounded-lg text-white hover:text-cyan-200 hover:border-cyan-300 transition-all duration-300 text-xs font-semibold"
+                className="flex items-center gap-1 px-3 py-2 bg-black/70 backdrop-blur-md border border-cyan-400/40 rounded-lg text-gray-100 hover:text-cyan-200 hover:border-cyan-300 transition-all duration-300 text-xs font-semibold"
               >
                 <span className="text-sm">{item.icon}</span>
                 <span>{item.label}</span>
@@ -154,7 +154,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
             transition={{ delay: 0.7, duration: 0.8 }}
           >
             Explorez mon univers technologique
-          </p>
+          </motion.p>
         </div>
         
         {/* Decorative elements - 2 carrés en diagonal plus proches du titre */}
