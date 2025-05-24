@@ -1,7 +1,8 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { X, Award, Shield, Brain, Eye, Users } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import CertificationViewer from '../CertificationViewer';
 
 interface CertificationModalProps {
   isOpen: boolean;
@@ -9,46 +10,58 @@ interface CertificationModalProps {
 }
 
 const CertificationModal: React.FC<CertificationModalProps> = ({ isOpen, onClose }) => {
+  const [selectedCert, setSelectedCert] = useState<string | null>(null);
+
   const certifications = [
     {
+      id: 'anssi',
       title: "ANSSI",
       issuer: "Agence Nationale de la Sécurité des Systèmes d'Information",
       icon: Shield,
       description: "Certification en cybersécurité et sécurité des systèmes d'information",
       color: "cyan",
-      status: "Obtenu"
+      status: "Obtenu",
+      images: ['/certifications/anssi.jpg'] // Vous devrez ajouter les images
     },
     {
+      id: 'pix',
       title: "PIX",
       issuer: "Service public français",
       icon: Brain,
       description: "Certification des compétences numériques - Plateforme officielle française",
-      color: "purple", 
-      status: "Obtenu"
+      color: "purple",
+      status: "Obtenu",
+      images: ['/certifications/pix.jpg']
     },
     {
+      id: 'rgpd',
       title: "RGPD",
       issuer: "Formation Réglementation Européenne",
       icon: Eye,
       description: "Certification en protection des données personnelles et conformité RGPD",
       color: "pink",
-      status: "Obtenu"
+      status: "Obtenu",
+      images: ['/certifications/rgpd.jpg']
     },
     {
+      id: 'google',
       title: "Google",
       issuer: "Google",
       icon: Award,
       description: "Certifications Google en développement web et outils numériques",
       color: "yellow",
-      status: "Obtenu"
+      status: "Obtenu",
+      images: ['/certifications/google1.jpg', '/certifications/google2.jpg']
     },
     {
+      id: 'microsoft',
       title: "Microsoft",
       issuer: "Microsoft",
       icon: Users,
       description: "Certifications Microsoft en technologies et outils de productivité",
       color: "blue",
-      status: "Obtenu"
+      status: "Obtenu",
+      images: ['/certifications/microsoft1.jpg', '/certifications/microsoft2.jpg']
     }
   ];
 
@@ -72,7 +85,7 @@ const CertificationModal: React.FC<CertificationModalProps> = ({ isOpen, onClose
           
           {/* Modal */}
           <motion.div
-            className="relative w-full max-w-4xl max-h-[80vh] overflow-y-auto"
+            className="relative w-full max-w-7xl max-h-[95vh] overflow-y-auto custom-scrollbar"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
@@ -94,15 +107,15 @@ const CertificationModal: React.FC<CertificationModalProps> = ({ isOpen, onClose
               <div className="absolute -bottom-1 -right-1 w-4 h-4 border-b-2 border-r-2 border-cyan-400"></div>
               
               {/* Content */}
-              <div className="space-y-6">
-                <h2 className="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent font-mono">
+              <div className="space-y-8">
+                <h2 className="text-4xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent font-mono">
                   Certifications
                 </h2>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {certifications.map((cert, index) => (
                     <motion.div
-                      key={cert.title}
+                      key={cert.id}
                       className="p-6 border border-cyan-400/30 rounded-lg bg-black/30 hover:bg-black/50 transition-colors"
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -121,9 +134,9 @@ const CertificationModal: React.FC<CertificationModalProps> = ({ isOpen, onClose
                         </span>
                       </div>
                       
-                      <p className="text-cyan-100 text-sm leading-relaxed">{cert.description}</p>
+                      <p className="text-cyan-100 text-sm leading-relaxed mb-4">{cert.description}</p>
                       
-                      <div className="mt-4 pt-4 border-t border-cyan-400/20">
+                      <div className="mb-4">
                         <div className="w-full bg-gray-700 rounded-full h-2">
                           <motion.div 
                             className="bg-cyan-400 h-2 rounded-full"
@@ -134,6 +147,13 @@ const CertificationModal: React.FC<CertificationModalProps> = ({ isOpen, onClose
                         </div>
                         <p className="text-xs text-cyan-300 mt-2">Certification validée</p>
                       </div>
+
+                      <button
+                        onClick={() => setSelectedCert(cert.id)}
+                        className="w-full px-4 py-2 bg-gradient-to-r from-cyan-500 to-purple-500 text-white rounded-lg hover:from-cyan-600 hover:to-purple-600 transition-all duration-300 font-semibold"
+                      >
+                        Voir les certifications
+                      </button>
                     </motion.div>
                   ))}
                 </div>
@@ -148,6 +168,15 @@ const CertificationModal: React.FC<CertificationModalProps> = ({ isOpen, onClose
               </div>
             </div>
           </motion.div>
+
+          {/* Certification Viewer */}
+          {selectedCert && (
+            <CertificationViewer
+              isOpen={!!selectedCert}
+              onClose={() => setSelectedCert(null)}
+              certification={certifications.find(cert => cert.id === selectedCert)!}
+            />
+          )}
         </motion.div>
       )}
     </AnimatePresence>

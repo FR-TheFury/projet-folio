@@ -12,7 +12,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
     // 3 boutons à gauche
     { id: 'projects', label: 'Projets', position: 'top-4 left-4 md:top-12 md:left-12', icon: '🚀' },
     { id: 'experience', label: 'Expériences', position: 'top-1/2 left-4 -translate-y-1/2 md:left-12', icon: '🎓' },
-    { id: 'about', label: 'À propos', position: 'bottom-4 left-4 md:bottom-12 md:left-12', icon: '👨‍💻' },
+    { id: 'about', label: 'Moi et mon Parcours', position: 'bottom-4 left-4 md:bottom-12 md:left-12', icon: '👨‍💻' },
     
     // 3 boutons à droite
     { id: 'skills', label: 'Compétences', position: 'top-4 right-4 md:top-12 md:right-12', icon: '⚡' },
@@ -65,16 +65,16 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
         transition={{ delay: 0.5, duration: 1 }}
       >
         {/* Contour avec fond semi-transparent */}
-        <div className="relative bg-black/20 backdrop-blur-md border border-cyan-400/30 rounded-2xl p-6 md:p-12">
+        <div className="relative bg-black/40 backdrop-blur-md border border-cyan-400/40 rounded-2xl p-6 md:p-12">
           {/* Corner accents pour le contour principal */}
-          <div className="absolute -top-1 -left-1 w-6 h-6 border-t-2 border-l-2 border-cyan-400/60"></div>
-          <div className="absolute -top-1 -right-1 w-6 h-6 border-t-2 border-r-2 border-cyan-400/60"></div>
-          <div className="absolute -bottom-1 -left-1 w-6 h-6 border-b-2 border-l-2 border-cyan-400/60"></div>
-          <div className="absolute -bottom-1 -right-1 w-6 h-6 border-b-2 border-r-2 border-cyan-400/60"></div>
+          <div className="absolute -top-1 -left-1 w-6 h-6 border-t-2 border-l-2 border-cyan-400/80"></div>
+          <div className="absolute -top-1 -right-1 w-6 h-6 border-t-2 border-r-2 border-cyan-400/80"></div>
+          <div className="absolute -bottom-1 -left-1 w-6 h-6 border-b-2 border-l-2 border-cyan-400/80"></div>
+          <div className="absolute -bottom-1 -right-1 w-6 h-6 border-b-2 border-r-2 border-cyan-400/80"></div>
 
           {/* Nom principal */}
           <motion.h1 
-            className="text-4xl sm:text-6xl md:text-8xl font-bold bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent mb-4 md:mb-8 font-mono tracking-wider"
+            className="text-4xl sm:text-6xl md:text-8xl font-bold bg-gradient-to-r from-cyan-300 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-4 md:mb-8 font-mono tracking-wider drop-shadow-[0_0_30px_rgba(0,255,255,0.5)]"
             animate={{ 
               textShadow: [
                 "0 0 20px rgba(0,255,255,0.5)",
@@ -94,10 +94,10 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8 }}
           >
-            <p className="text-base sm:text-lg md:text-2xl text-cyan-100 leading-relaxed">
+            <p className="text-base sm:text-lg md:text-2xl text-white leading-relaxed font-semibold drop-shadow-[0_0_10px_rgba(0,0,0,0.8)]">
               Développeur Full Stack / Web Designer / Humain
             </p>
-            <p className="text-sm sm:text-base md:text-lg text-cyan-300 font-medium">
+            <p className="text-sm sm:text-base md:text-lg text-gray-200 font-medium drop-shadow-[0_0_8px_rgba(0,0,0,0.8)]">
               Sérieux • Volontaire • Motivé • Curieux
             </p>
           </motion.div>
@@ -111,7 +111,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
           >
             <a
               href="mailto:teodebaypro@gmail.com"
-              className="flex items-center justify-center gap-2 px-4 md:px-6 py-2 md:py-3 border border-cyan-400/50 rounded-lg hover:bg-cyan-400/10 transition-colors text-cyan-300 hover:text-white text-sm md:text-base"
+              className="flex items-center justify-center gap-2 px-4 md:px-6 py-2 md:py-3 border border-cyan-400/60 bg-black/40 rounded-lg hover:bg-cyan-400/20 transition-colors text-white hover:text-cyan-200 text-sm md:text-base font-semibold backdrop-blur-sm"
             >
               <Mail size={14} className="md:w-4 md:h-4" />
               Email
@@ -120,7 +120,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
               href="https://linkedin.com/in/teo-debay"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 px-4 md:px-6 py-2 md:py-3 border border-purple-400/50 rounded-lg hover:bg-purple-400/10 transition-colors text-purple-300 hover:text-white text-sm md:text-base"
+              className="flex items-center justify-center gap-2 px-4 md:px-6 py-2 md:py-3 border border-purple-400/60 bg-black/40 rounded-lg hover:bg-purple-400/20 transition-colors text-white hover:text-purple-200 text-sm md:text-base font-semibold backdrop-blur-sm"
             >
               <Linkedin size={14} className="md:w-4 md:h-4" />
               LinkedIn
@@ -138,7 +138,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
               <button
                 key={item.id}
                 onClick={() => onOpenModal(item.id)}
-                className="flex items-center gap-1 px-3 py-2 bg-black/60 backdrop-blur-md border border-cyan-400/30 rounded-lg text-cyan-300 hover:text-white hover:border-cyan-300 transition-all duration-300 text-xs"
+                className="flex items-center gap-1 px-3 py-2 bg-black/70 backdrop-blur-md border border-cyan-400/40 rounded-lg text-white hover:text-cyan-200 hover:border-cyan-300 transition-all duration-300 text-xs font-semibold"
               >
                 <span className="text-sm">{item.icon}</span>
                 <span>{item.label}</span>
@@ -148,13 +148,13 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
 
           {/* Message d'invitation */}
           <motion.p
-            className="text-xs md:text-sm text-cyan-400/70 mt-6"
+            className="text-xs md:text-sm text-cyan-200/80 mt-6 font-medium drop-shadow-[0_0_8px_rgba(0,0,0,0.8)]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.7, duration: 0.8 }}
           >
             Explorez mon univers technologique
-          </motion.p>
+          </p>
         </div>
         
         {/* Decorative elements - 2 carrés en diagonal plus proches du titre */}
