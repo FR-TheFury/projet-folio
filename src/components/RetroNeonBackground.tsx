@@ -3,57 +3,129 @@ import React, { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
-// Grille lumineuse au sol avec perspective infinie
-const CyberpunkGrid = () => {
-  const gridRef = useRef<THREE.Group>(null);
+// Skybox cyberpunk environnante
+const CyberpunkSkybox = () => {
+  const skyboxRef = useRef<THREE.Mesh>(null);
   
   useFrame((state) => {
-    if (gridRef.current) {
-      // Animation très subtile sans clignotement
-      const pulse = Math.sin(state.clock.elapsedTime * 0.5) * 0.1 + 0.9;
-      gridRef.current.children.forEach((child) => {
+    if (skyboxRef.current) {
+      // Rotation très lente de la skybox
+      skyboxRef.current.rotation.y = state.clock.elapsedTime * 0.002;
+    }
+  });
+
+  return (
+    <mesh ref={skyboxRef} scale={[600, 600, 600]}>
+      <sphereGeometry args={[1, 32, 32]} />
+      <meshBasicMaterial 
+        color="#0a0a1a"
+        side={THREE.BackSide}
+        transparent
+        opacity={0.9}
+      >
+        <primitive 
+          object={(() => {
+            const canvas = document.createElement('canvas');
+            canvas.width = 512;
+            canvas.height = 512;
+            const ctx = canvas.getContext('2d');
+            if (ctx) {
+              // Gradient de ciel cyberpunk
+              const gradient = ctx.createLinearGradient(0, 0, 0, 512);
+              gradient.addColorStop(0, '#1a0a2e');
+              gradient.addColorStop(0.3, '#16213e');
+              gradient.addColorStop(0.6, '#0f3460');
+              gradient.addColorStop(1, '#0a0a0a');
+              ctx.fillStyle = gradient;
+              ctx.fillRect(0, 0, 512, 512);
+              
+              // Étoiles subtiles
+              ctx.fillStyle = '#ffffff';
+              for (let i = 0; i < 100; i++) {
+                const x = Math.random() * 512;
+                const y = Math.random() * 256;
+                const size = Math.random() * 2;
+                ctx.globalAlpha = Math.random() * 0.8 + 0.2;
+                ctx.fillRect(x, y, size, size);
+              }
+            }
+            const texture = new THREE.CanvasTexture(canvas);
+            return texture;
+          })()}
+          attach="map"
+        />
+      </meshBasicMaterial>
+    </mesh>
+  );
+};
+
+// Sol propre avec grille néon
+const CleanCyberpunkFloor = () => {
+  const floorRef = useRef<THREE.Group>(null);
+  
+  useFrame((state) => {
+    if (floorRef.current) {
+      // Pulsation subtile de la grille
+      const pulse = Math.sin(state.clock.elapsedTime * 0.8) * 0.1 + 0.9;
+      floorRef.current.children.forEach((child) => {
         if (child instanceof THREE.Mesh && child.material instanceof THREE.Material) {
-          (child.material as any).opacity = pulse * 0.6;
+          (child.material as any).emissiveIntensity = pulse * 0.3;
         }
       });
     }
   });
 
-  const gridElements = useMemo(() => {
+  const floorElements = useMemo(() => {
     const elements = [];
+    
+    // Plan de sol principal
+    elements.push(
+      <mesh key="main-floor" position={[0, -80, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[500, 500]} />
+        <meshLambertMaterial 
+          color="#1a1a2e"
+          transparent
+          opacity={0.8}
+        />
+      </mesh>
+    );
+    
+    // Grille néon principale
     const gridSize = 400;
-    const divisions = 60;
+    const divisions = 40;
     const step = gridSize / divisions;
     
-    // Lignes principales horizontales (cyan subtil)
+    // Lignes principales horizontales (cyan)
     for (let i = 0; i <= divisions; i++) {
       const z = -gridSize / 2 + i * step;
+      const isMainLine = i % 10 === 0;
       elements.push(
-        <mesh key={`h-${i}`} position={[0, -80, z]}>
-          <boxGeometry args={[gridSize, 0.5, 1]} />
+        <mesh key={`h-${i}`} position={[0, -79.5, z]}>
+          <boxGeometry args={[gridSize, 0.2, isMainLine ? 2 : 0.5]} />
           <meshLambertMaterial 
-            color="#004466" 
+            color={isMainLine ? "#00aaff" : "#004466"} 
             transparent 
-            opacity={0.6}
-            emissive="#002233"
-            emissiveIntensity={0.2}
+            opacity={isMainLine ? 0.8 : 0.6}
+            emissive={isMainLine ? "#0088cc" : "#002244"}
+            emissiveIntensity={0.3}
           />
         </mesh>
       );
     }
     
-    // Lignes principales verticales (violet subtil)
+    // Lignes principales verticales (magenta)
     for (let i = 0; i <= divisions; i++) {
       const x = -gridSize / 2 + i * step;
+      const isMainLine = i % 10 === 0;
       elements.push(
-        <mesh key={`v-${i}`} position={[x, -80, 0]}>
-          <boxGeometry args={[1, 0.5, gridSize]} />
+        <mesh key={`v-${i}`} position={[x, -79.5, 0]}>
+          <boxGeometry args={[isMainLine ? 2 : 0.5, 0.2, gridSize]} />
           <meshLambertMaterial 
-            color="#442266" 
+            color={isMainLine ? "#ff00aa" : "#442266"} 
             transparent 
-            opacity={0.6}
-            emissive="#221133"
-            emissiveIntensity={0.2}
+            opacity={isMainLine ? 0.8 : 0.6}
+            emissive={isMainLine ? "#cc0088" : "#221144"}
+            emissiveIntensity={0.3}
           />
         </mesh>
       );
@@ -62,121 +134,67 @@ const CyberpunkGrid = () => {
     return elements;
   }, []);
 
-  return <group ref={gridRef}>{gridElements}</group>;
+  return <group ref={floorRef}>{elements}</group>;
 };
 
-// Buildings cyberpunk avec textures propres
+// Ville cyberpunk améliorée
 const CyberpunkCity = () => {
   const cityRef = useRef<THREE.Group>(null);
   
   useFrame((state) => {
     if (cityRef.current) {
-      // Rotation très lente de la ville
-      cityRef.current.rotation.y = state.clock.elapsedTime * 0.008;
+      cityRef.current.rotation.y = state.clock.elapsedTime * 0.005;
     }
   });
 
   const buildings = useMemo(() => {
     const buildingArray = [];
     const citySize = 300;
-    const buildingCount = 120;
+    const buildingCount = 80;
     
     for (let i = 0; i < buildingCount; i++) {
       const x = (Math.random() - 0.5) * citySize;
       const z = (Math.random() - 0.5) * citySize;
-      const baseHeight = Math.random() * 80 + 30;
-      const width = Math.random() * 12 + 6;
-      const depth = Math.random() * 12 + 6;
-      
-      // Couleurs subtiles pour les contours
-      const edgeColors = ['#003355', '#330055', '#553300', '#005533', '#550033'];
-      const edgeColor = edgeColors[Math.floor(Math.random() * edgeColors.length)];
-      
-      // Types de buildings variés
-      const buildingType = Math.random();
-      let height = baseHeight;
+      const baseHeight = Math.random() * 60 + 20;
+      const width = Math.random() * 8 + 4;
+      const depth = Math.random() * 8 + 4;
       
       buildingArray.push(
-        <group key={i} position={[x, height / 2 - 80, z]}>
-          {/* Building principal */}
+        <group key={i} position={[x, baseHeight / 2 - 80, z]}>
+          {/* Building principal avec couleur plus claire */}
           <mesh>
-            <boxGeometry args={[width, height, depth]} />
+            <boxGeometry args={[width, baseHeight, depth]} />
             <meshLambertMaterial 
-              color="#1a1a1a"
+              color="#2a2a3a"
               transparent
-              opacity={0.95}
+              opacity={0.9}
             />
           </mesh>
           
-          {/* Contours subtils du building */}
+          {/* Contours subtils */}
           <mesh>
-            <boxGeometry args={[width + 0.5, height + 0.5, depth + 0.5]} />
+            <boxGeometry args={[width + 0.3, baseHeight + 0.3, depth + 0.3]} />
             <meshLambertMaterial 
-              color={edgeColor}
+              color="#004488"
               wireframe
               transparent
-              opacity={0.4}
-              emissive={edgeColor}
+              opacity={0.5}
+              emissive="#002244"
               emissiveIntensity={0.2}
             />
           </mesh>
           
-          {/* Tour supplémentaire pour certains buildings */}
-          {buildingType > 0.6 && (
-            <>
-              <mesh position={[0, height / 2 + 15, 0]}>
-                <boxGeometry args={[width * 0.6, 30, depth * 0.6]} />
-                <meshLambertMaterial color="#1a1a1a" transparent opacity={0.95} />
-              </mesh>
-              <mesh position={[0, height / 2 + 15, 0]}>
-                <boxGeometry args={[width * 0.6 + 0.4, 30.4, depth * 0.6 + 0.4]} />
-                <meshLambertMaterial 
-                  color={edgeColor}
-                  wireframe
-                  transparent
-                  opacity={0.3}
-                  emissive={edgeColor}
-                  emissiveIntensity={0.15}
-                />
-              </mesh>
-            </>
-          )}
-          
-          {/* Antennes subtiles sur le toit */}
-          {Math.random() > 0.5 && (
-            <mesh position={[0, height / 2 + 8, 0]}>
-              <cylinderGeometry args={[0.3, 0.3, 16]} />
-              <meshLambertMaterial 
-                color="#666666"
-                emissive="#333333"
-                emissiveIntensity={0.3}
-              />
-            </mesh>
-          )}
-          
-          {/* Fenêtres avec éclairage subtil */}
-          {Array.from({ length: Math.floor(height / 12) }, (_, floor) => (
+          {/* Fenêtres éclairées */}
+          {Array.from({ length: Math.floor(baseHeight / 8) }, (_, floor) => (
             <group key={floor}>
-              {/* Fenêtres face avant */}
-              <mesh position={[0, -height/2 + floor * 12 + 6, depth/2 + 0.2]}>
-                <planeGeometry args={[width * 0.9, 8]} />
+              <mesh position={[0, -baseHeight/2 + floor * 8 + 4, depth/2 + 0.1]}>
+                <planeGeometry args={[width * 0.8, 6]} />
                 <meshLambertMaterial 
-                  color={Math.random() > 0.6 ? "#445566" : "#222222"}
+                  color={Math.random() > 0.7 ? "#ffaa44" : "#333344"}
                   transparent
                   opacity={0.8}
-                  emissive={Math.random() > 0.6 ? "#223344" : "#000000"}
-                  emissiveIntensity={0.2}
-                />
-              </mesh>
-              {/* Fenêtres face arrière */}
-              <mesh position={[0, -height/2 + floor * 12 + 6, -depth/2 - 0.2]} rotation={[0, Math.PI, 0]}>
-                <planeGeometry args={[width * 0.9, 8]} />
-                <meshLambertMaterial 
-                  color={Math.random() > 0.6 ? "#445566" : "#222222"}
-                  transparent
-                  opacity={0.8}
-                  emissive={Math.random() > 0.6 ? "#223344" : "#000000"}
-                  emissiveIntensity={0.2}
+                  emissive={Math.random() > 0.7 ? "#aa6622" : "#111122"}
+                  emissiveIntensity={0.4}
                 />
               </mesh>
             </group>
@@ -191,18 +209,16 @@ const CyberpunkCity = () => {
   return <group ref={cityRef}>{buildings}</group>;
 };
 
-// Caméra avec mouvement aérien immersif
+// Caméra avec mouvement fluide
 const CyberpunkCamera = () => {
   useFrame((state) => {
-    const time = state.clock.elapsedTime * 0.05;
+    const time = state.clock.elapsedTime * 0.03;
     
-    // Mouvement de caméra aérienne qui survole la ville
-    state.camera.position.x = Math.sin(time) * 80 + Math.cos(time * 0.7) * 40;
-    state.camera.position.z = Math.cos(time) * 80 + Math.sin(time * 0.7) * 40;
-    state.camera.position.y = 60 + Math.sin(time * 0.3) * 20;
+    state.camera.position.x = Math.sin(time) * 60 + Math.cos(time * 0.7) * 30;
+    state.camera.position.z = Math.cos(time) * 60 + Math.sin(time * 0.7) * 30;
+    state.camera.position.y = 40 + Math.sin(time * 0.3) * 15;
     
-    // La caméra regarde légèrement vers le bas pour voir la ville
-    const lookAtY = -30 + Math.sin(time * 0.2) * 10;
+    const lookAtY = -20 + Math.sin(time * 0.2) * 8;
     state.camera.lookAt(0, lookAtY, 0);
   });
   
@@ -210,59 +226,68 @@ const CyberpunkCamera = () => {
 };
 
 const RetroNeonBackground: React.FC = () => {
-  console.log("Rendering clean cyberpunk cityscape");
+  console.log("Rendering improved cyberpunk cityscape with skybox");
 
   return (
     <div className="fixed inset-0 z-[-1] w-full h-full">
       <Canvas
         camera={{ 
-          position: [60, 60, 60], 
-          fov: 85,
+          position: [50, 40, 50], 
+          fov: 75,
           near: 0.1,
-          far: 800
+          far: 1000
         }}
         style={{ 
           width: '100%', 
           height: '100%',
-          background: 'linear-gradient(180deg, #000510 0%, #001020 15%, #002030 35%, #000815 70%, #000000 100%)'
+          background: 'linear-gradient(180deg, #1a0a2e 0%, #16213e 25%, #0f3460 60%, #0a0a1a 100%)'
         }}
-        onCreated={() => console.log("Clean cyberpunk cityscape environment loaded")}
+        onCreated={() => console.log("Improved cyberpunk environment loaded")}
       >
-        {/* Contrôle de caméra immersif */}
+        {/* Contrôle de caméra */}
         <CyberpunkCamera />
         
-        {/* Brouillard atmosphérique cyberpunk */}
-        <fog attach="fog" args={['#000815', 80, 350]} />
+        {/* Skybox cyberpunk */}
+        <CyberpunkSkybox />
         
-        {/* Grille lumineuse au sol */}
-        <CyberpunkGrid />
+        {/* Brouillard réduit pour plus de visibilité */}
+        <fog attach="fog" args={['#0a0a2e', 100, 400]} />
         
-        {/* Ville cyberpunk 3D */}
+        {/* Sol propre avec grille néon */}
+        <CleanCyberpunkFloor />
+        
+        {/* Ville cyberpunk */}
         <CyberpunkCity />
         
-        {/* Éclairage ambiant sombre */}
-        <ambientLight intensity={0.1} color="#001040" />
+        {/* Éclairage amélioré - plus lumineux */}
+        <ambientLight intensity={0.4} color="#4a4a6a" />
         
-        {/* Éclairages subtils stratégiques */}
-        <pointLight position={[0, 120, 0]} color="#004488" intensity={2} distance={200} />
-        <pointLight position={[-80, 80, -80]} color="#440088" intensity={1.5} distance={160} />
-        <pointLight position={[80, 80, 80]} color="#004455" intensity={1.5} distance={160} />
-        <pointLight position={[0, 40, -120]} color="#554400" intensity={1.2} distance={140} />
-        <pointLight position={[-120, 60, 0]} color="#440044" intensity={1.2} distance={140} />
+        {/* Éclairages principaux plus intenses */}
+        <pointLight position={[0, 100, 0]} color="#6688ff" intensity={4} distance={300} />
+        <pointLight position={[-60, 60, -60]} color="#ff6688" intensity={3} distance={200} />
+        <pointLight position={[60, 60, 60]} color="#66ffaa" intensity={3} distance={200} />
+        <pointLight position={[0, 30, -100]} color="#ffaa66" intensity={2.5} distance={180} />
         
-        {/* Éclairage directionnel pour la profondeur */}
+        {/* Éclairage directionnel principal */}
         <directionalLight 
-          position={[40, 100, 40]} 
-          color="#330066" 
-          intensity={0.8}
+          position={[30, 80, 30]} 
+          color="#aabbff" 
+          intensity={2}
           castShadow 
         />
         
-        {/* Lumière de contraste */}
+        {/* Éclairage de remplissage */}
         <directionalLight 
-          position={[-40, 60, -40]} 
-          color="#003366" 
-          intensity={0.6}
+          position={[-30, 40, -30]} 
+          color="#ffaabb" 
+          intensity={1.5}
+        />
+        
+        {/* Éclairage ambiant supplémentaire pour la visibilité */}
+        <hemisphereLight 
+          skyColor="#4a6aaa" 
+          groundColor="#2a2a4a" 
+          intensity={0.6} 
         />
       </Canvas>
     </div>
