@@ -1,5 +1,6 @@
 
 import React, { useMemo } from 'react';
+import * as THREE from 'three';
 import { createRoadMaterial } from './CityMaterials';
 
 const RoadSystem: React.FC = () => {
