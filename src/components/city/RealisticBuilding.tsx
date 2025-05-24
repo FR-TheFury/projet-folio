@@ -1,7 +1,6 @@
 
 import React, { useMemo } from 'react';
 import * as THREE from 'three';
-import { createBuildingMaterials } from './CityMaterials';
 
 interface BuildingProps {
   position: [number, number, number];
@@ -12,22 +11,20 @@ interface BuildingProps {
 }
 
 const RealisticBuilding: React.FC<BuildingProps> = ({ position, width, height, depth, style }) => {
-  const materials = useMemo(() => createBuildingMaterials(), []);
-  
   const buildingElements = useMemo(() => {
     const elements = [];
     
     // Main building structure
-    const mainMaterial = style === 'modern' ? materials.modernDark :
-                        style === 'classic' ? materials.brick :
-                        style === 'residential' ? materials.concrete :
-                        materials.concrete;
+    const mainMaterialProps = style === 'modern' ? { color: '#2c2c2c', roughness: 0.3, metalness: 0.6 } :
+                            style === 'classic' ? { color: '#8b4513', roughness: 0.9, metalness: 0.0 } :
+                            style === 'residential' ? { color: '#8a8a8a', roughness: 0.8, metalness: 0.1 } :
+                            { color: '#8a8a8a', roughness: 0.8, metalness: 0.1 };
 
     // Building base
     elements.push(
-      <mesh key="main" position={[0, height / 2, 0]}>
+      <mesh key="main" position={[0, height / 2, 0]} castShadow receiveShadow>
         <boxGeometry args={[width, height, depth]} />
-        <primitive object={mainMaterial} />
+        <meshStandardMaterial {...mainMaterialProps} />
       </mesh>
     );
 
@@ -43,17 +40,14 @@ const RealisticBuilding: React.FC<BuildingProps> = ({ position, width, height, d
         
         // Random window lighting
         const isLit = Math.random() > 0.4;
-        const windowMaterial = isLit ? 
-          new THREE.MeshStandardMaterial({ 
-            color: '#ffff88', 
-            emissive: '#ffff44',
-            emissiveIntensity: 0.3 
-          }) : materials.glass;
+        const windowMaterialProps = isLit ? 
+          { color: '#ffff88', emissive: '#ffff44', emissiveIntensity: 0.3 } : 
+          { color: '#87ceeb', roughness: 0.1, metalness: 0.9, transparent: true, opacity: 0.3 };
 
         elements.push(
           <mesh key={`window-front-${row}-${col}`} position={[windowX, windowY, windowZ]}>
             <boxGeometry args={[1.5, 2, 0.1]} />
-            <primitive object={windowMaterial} />
+            <meshStandardMaterial {...windowMaterialProps} />
           </mesh>
         );
 
@@ -61,7 +55,7 @@ const RealisticBuilding: React.FC<BuildingProps> = ({ position, width, height, d
         elements.push(
           <mesh key={`window-back-${row}-${col}`} position={[windowX, windowY, -windowZ]}>
             <boxGeometry args={[1.5, 2, 0.1]} />
-            <primitive object={windowMaterial} />
+            <meshStandardMaterial {...windowMaterialProps} />
           </mesh>
         );
       }
@@ -76,24 +70,21 @@ const RealisticBuilding: React.FC<BuildingProps> = ({ position, width, height, d
         const windowX = width/2 + 0.02;
         
         const isLit = Math.random() > 0.4;
-        const windowMaterial = isLit ? 
-          new THREE.MeshStandardMaterial({ 
-            color: '#ffff88', 
-            emissive: '#ffff44',
-            emissiveIntensity: 0.3 
-          }) : materials.glass;
+        const windowMaterialProps = isLit ? 
+          { color: '#ffff88', emissive: '#ffff44', emissiveIntensity: 0.3 } : 
+          { color: '#87ceeb', roughness: 0.1, metalness: 0.9, transparent: true, opacity: 0.3 };
 
         elements.push(
           <mesh key={`window-side-right-${row}-${col}`} position={[windowX, windowY, windowZ]}>
             <boxGeometry args={[0.1, 2, 1.5]} />
-            <primitive object={windowMaterial} />
+            <meshStandardMaterial {...windowMaterialProps} />
           </mesh>
         );
 
         elements.push(
           <mesh key={`window-side-left-${row}-${col}`} position={[-windowX, windowY, windowZ]}>
             <boxGeometry args={[0.1, 2, 1.5]} />
-            <primitive object={windowMaterial} />
+            <meshStandardMaterial {...windowMaterialProps} />
           </mesh>
         );
       }
@@ -103,23 +94,23 @@ const RealisticBuilding: React.FC<BuildingProps> = ({ position, width, height, d
     if (style === 'residential') {
       // Pitched roof
       elements.push(
-        <mesh key="roof" position={[0, height + 2, 0]} rotation={[0, 0, 0]}>
+        <mesh key="roof" position={[0, height + 2, 0]} rotation={[0, 0, 0]} castShadow>
           <coneGeometry args={[Math.max(width, depth) * 0.7, 4, 4]} />
-          <primitive object={materials.roof} />
+          <meshStandardMaterial color="#4a4a4a" roughness={0.8} metalness={0.2} />
         </mesh>
       );
     } else {
       // Flat roof with details
       elements.push(
-        <mesh key="roof" position={[0, height/2 + 0.5, 0]}>
+        <mesh key="roof" position={[0, height/2 + 0.5, 0]} castShadow>
           <boxGeometry args={[width + 0.5, 1, depth + 0.5]} />
-          <primitive object={materials.roof} />
+          <meshStandardMaterial color="#4a4a4a" roughness={0.8} metalness={0.2} />
         </mesh>
       );
     }
 
     return elements;
-  }, [materials, width, height, depth, style]);
+  }, [width, height, depth, style]);
 
   return <group position={position}>{buildingElements}</group>;
 };
