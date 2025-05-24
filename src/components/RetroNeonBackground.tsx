@@ -1,7 +1,6 @@
 
 import React, { useState } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { EffectComposer, SSAO, Bloom } from '@react-three/postprocessing';
 import PerformanceToggle from './PerformanceToggle';
 import CityGenerator from './city/CityGenerator';
 import RoadSystem from './city/RoadSystem';
@@ -45,13 +44,6 @@ const RealisticCityBackground: React.FC = () => {
           
           <RoadSystem />
           <CityGenerator />
-          
-          {effectsEnabled && (
-            <EffectComposer>
-              <SSAO intensity={0.1} radius={0.1} />
-              <Bloom intensity={0.3} luminanceThreshold={0.9} luminanceSmoothing={0.4} />
-            </EffectComposer>
-          )}
         </Canvas>
       </div>
       
