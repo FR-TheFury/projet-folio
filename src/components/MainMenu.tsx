@@ -57,96 +57,105 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
         ))}
       </div>
       
-      {/* Contenu central parfaitement centré */}
+      {/* Contenu central parfaitement centré avec contour */}
       <motion.div 
         className="text-center z-10 px-4 w-full max-w-4xl mx-auto relative"
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.5, duration: 1 }}
       >
-        {/* Nom principal */}
-        <motion.h1 
-          className="text-4xl sm:text-6xl md:text-8xl font-bold bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent mb-4 md:mb-8 font-mono tracking-wider"
-          animate={{ 
-            textShadow: [
-              "0 0 20px rgba(0,255,255,0.5)",
-              "0 0 40px rgba(255,0,255,0.5)",
-              "0 0 20px rgba(0,255,255,0.5)"
-            ]
-          }}
-          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-        >
-          TÉO DEBAY
-        </motion.h1>
-        
-        {/* Slogan */}
-        <motion.div
-          className="space-y-2 md:space-y-4 mb-6 md:mb-8"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.8 }}
-        >
-          <p className="text-base sm:text-lg md:text-2xl text-cyan-100 leading-relaxed">
-            Développeur Full Stack / Web Designer / Humain
-          </p>
-          <p className="text-sm sm:text-base md:text-lg text-cyan-300 font-medium">
-            Sérieux • Volontaire • Motivé • Curieux
-          </p>
-        </motion.div>
+        {/* Contour avec fond semi-transparent */}
+        <div className="relative bg-black/20 backdrop-blur-md border border-cyan-400/30 rounded-2xl p-6 md:p-12">
+          {/* Corner accents pour le contour principal */}
+          <div className="absolute -top-1 -left-1 w-6 h-6 border-t-2 border-l-2 border-cyan-400/60"></div>
+          <div className="absolute -top-1 -right-1 w-6 h-6 border-t-2 border-r-2 border-cyan-400/60"></div>
+          <div className="absolute -bottom-1 -left-1 w-6 h-6 border-b-2 border-l-2 border-cyan-400/60"></div>
+          <div className="absolute -bottom-1 -right-1 w-6 h-6 border-b-2 border-r-2 border-cyan-400/60"></div>
 
-        {/* Liens de contact */}
-        <motion.div
-          className="flex flex-col sm:flex-row justify-center gap-4 md:gap-6 mb-6"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.4, duration: 0.8 }}
-        >
-          <a
-            href="mailto:teodebaypro@gmail.com"
-            className="flex items-center justify-center gap-2 px-4 md:px-6 py-2 md:py-3 border border-cyan-400/50 rounded-lg hover:bg-cyan-400/10 transition-colors text-cyan-300 hover:text-white text-sm md:text-base"
+          {/* Nom principal */}
+          <motion.h1 
+            className="text-4xl sm:text-6xl md:text-8xl font-bold bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent mb-4 md:mb-8 font-mono tracking-wider"
+            animate={{ 
+              textShadow: [
+                "0 0 20px rgba(0,255,255,0.5)",
+                "0 0 40px rgba(255,0,255,0.5)",
+                "0 0 20px rgba(0,255,255,0.5)"
+              ]
+            }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
           >
-            <Mail size={14} className="md:w-4 md:h-4" />
-            Email
-          </a>
-          <a
-            href="https://linkedin.com/in/teo-debay"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 px-4 md:px-6 py-2 md:py-3 border border-purple-400/50 rounded-lg hover:bg-purple-400/10 transition-colors text-purple-300 hover:text-white text-sm md:text-base"
+            TÉO DEBAY
+          </motion.h1>
+          
+          {/* Slogan */}
+          <motion.div
+            className="space-y-2 md:space-y-4 mb-6 md:mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
           >
-            <Linkedin size={14} className="md:w-4 md:h-4" />
-            LinkedIn
-          </a>
-        </motion.div>
+            <p className="text-base sm:text-lg md:text-2xl text-cyan-100 leading-relaxed">
+              Développeur Full Stack / Web Designer / Humain
+            </p>
+            <p className="text-sm sm:text-base md:text-lg text-cyan-300 font-medium">
+              Sérieux • Volontaire • Motivé • Curieux
+            </p>
+          </motion.div>
 
-        {/* Menu mobile */}
-        <motion.div
-          className="sm:hidden flex flex-wrap justify-center gap-2 max-w-xs mx-auto"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.6, duration: 0.8 }}
-        >
-          {menuItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => onOpenModal(item.id)}
-              className="flex items-center gap-1 px-3 py-2 bg-black/60 backdrop-blur-md border border-cyan-400/30 rounded-lg text-cyan-300 hover:text-white hover:border-cyan-300 transition-all duration-300 text-xs"
+          {/* Liens de contact */}
+          <motion.div
+            className="flex flex-col sm:flex-row justify-center gap-4 md:gap-6 mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.4, duration: 0.8 }}
+          >
+            <a
+              href="mailto:teodebaypro@gmail.com"
+              className="flex items-center justify-center gap-2 px-4 md:px-6 py-2 md:py-3 border border-cyan-400/50 rounded-lg hover:bg-cyan-400/10 transition-colors text-cyan-300 hover:text-white text-sm md:text-base"
             >
-              <span className="text-sm">{item.icon}</span>
-              <span>{item.label}</span>
-            </button>
-          ))}
-        </motion.div>
+              <Mail size={14} className="md:w-4 md:h-4" />
+              Email
+            </a>
+            <a
+              href="https://linkedin.com/in/teo-debay"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 px-4 md:px-6 py-2 md:py-3 border border-purple-400/50 rounded-lg hover:bg-purple-400/10 transition-colors text-purple-300 hover:text-white text-sm md:text-base"
+            >
+              <Linkedin size={14} className="md:w-4 md:h-4" />
+              LinkedIn
+            </a>
+          </motion.div>
 
-        {/* Message d'invitation */}
-        <motion.p
-          className="text-xs md:text-sm text-cyan-400/70 mt-6"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.7, duration: 0.8 }}
-        >
-          Explorez mon univers technologique
-        </motion.p>
+          {/* Menu mobile */}
+          <motion.div
+            className="sm:hidden flex flex-wrap justify-center gap-2 max-w-xs mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.6, duration: 0.8 }}
+          >
+            {menuItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => onOpenModal(item.id)}
+                className="flex items-center gap-1 px-3 py-2 bg-black/60 backdrop-blur-md border border-cyan-400/30 rounded-lg text-cyan-300 hover:text-white hover:border-cyan-300 transition-all duration-300 text-xs"
+              >
+                <span className="text-sm">{item.icon}</span>
+                <span>{item.label}</span>
+              </button>
+            ))}
+          </motion.div>
+
+          {/* Message d'invitation */}
+          <motion.p
+            className="text-xs md:text-sm text-cyan-400/70 mt-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.7, duration: 0.8 }}
+          >
+            Explorez mon univers technologique
+          </motion.p>
+        </div>
         
         {/* Decorative elements - 2 carrés en diagonal plus proches du titre */}
         <div className="hidden md:block">
