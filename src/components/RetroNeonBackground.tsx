@@ -1,8 +1,5 @@
-
 import React, { useState, useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { EffectComposer, Bloom, ChromaticAberration } from '@react-three/postprocessing';
-import { BlendFunction } from 'postprocessing';
 import * as THREE from 'three';
 import PerformanceToggle from './PerformanceToggle';
 
@@ -40,7 +37,7 @@ const CyberpunkFloor = () => {
       
       floorRef.current.children.forEach((child, index) => {
         if (child instanceof THREE.Mesh && child.material instanceof THREE.Material) {
-          const intensity = index % 2 === 0 ? pulse * 0.6 : secondaryPulse * 0.4;
+          const intensity = index % 2 === 0 ? pulse * 1.2 : secondaryPulse * 0.8;
           (child.material as any).emissiveIntensity = intensity;
         }
       });
@@ -158,7 +155,7 @@ const CyberpunkCity = () => {
               transparent
               opacity={0.8}
               emissive={primaryNeon}
-              emissiveIntensity={1.2}
+              emissiveIntensity={2.5}
             />
           </mesh>
           
@@ -169,13 +166,13 @@ const CyberpunkCity = () => {
               transparent
               opacity={0.9}
               emissive={secondaryNeon}
-              emissiveIntensity={2}
+              emissiveIntensity={3.5}
             />
           </mesh>
           
           {Array.from({ length: Math.floor(baseHeight / 8) }, (_, floor) => {
             const windowColor = Math.random() > 0.3 ? '#ffaa00' : '#004488';
-            const emissiveIntensity = Math.random() > 0.3 ? 1.5 : 0.8;
+            const emissiveIntensity = Math.random() > 0.3 ? 2.5 : 1.5;
             
             return (
               <group key={floor}>
@@ -200,7 +197,7 @@ const CyberpunkCity = () => {
               transparent
               opacity={0.7}
               emissive={primaryNeon}
-              emissiveIntensity={1.8}
+              emissiveIntensity={3}
             />
           </mesh>
         </group>
@@ -251,48 +248,28 @@ const CyberpunkLighting = () => {
   return (
     <>
       <fog attach="fog" args={['#1a0a2e', 80, 350]} />
-      <ambientLight intensity={0.2} color="#2a2a4a" />
-      <pointLight position={[0, 120, 0]} color="#ff00ff" intensity={6} distance={400} />
-      <pointLight position={[-80, 80, -80]} color="#00ffff" intensity={5} distance={300} />
-      <pointLight position={[80, 80, 80]} color="#ff0080" intensity={5} distance={300} />
-      <pointLight position={[0, 50, -120]} color="#8000ff" intensity={4} distance={250} />
-      <pointLight position={[-40, 60, 40]} color="#0080ff" intensity={3} distance={200} />
-      <pointLight position={[40, 60, -40]} color="#ff4080" intensity={3} distance={200} />
+      <ambientLight intensity={0.3} color="#2a2a4a" />
+      <pointLight position={[0, 120, 0]} color="#ff00ff" intensity={8} distance={400} />
+      <pointLight position={[-80, 80, -80]} color="#00ffff" intensity={7} distance={300} />
+      <pointLight position={[80, 80, 80]} color="#ff0080" intensity={7} distance={300} />
+      <pointLight position={[0, 50, -120]} color="#8000ff" intensity={6} distance={250} />
+      <pointLight position={[-40, 60, 40]} color="#0080ff" intensity={5} distance={200} />
+      <pointLight position={[40, 60, -40]} color="#ff4080" intensity={5} distance={200} />
       <directionalLight 
         position={[50, 100, 50]} 
         color="#aa88ff" 
-        intensity={1.5}
+        intensity={2}
         castShadow 
       />
       <directionalLight 
         position={[-50, 60, -50]} 
         color="#ff88aa" 
-        intensity={1}
+        intensity={1.5}
       />
       <hemisphereLight 
-        args={["#4a2a8a", "#1a0a3a", 0.4]}
+        args={["#4a2a8a", "#1a0a3a", 0.6]}
       />
     </>
-  );
-};
-
-// Effects Component
-const CyberpunkEffects = ({ enabled = true }: { enabled?: boolean }) => {
-  if (!enabled) return null;
-
-  return (
-    <EffectComposer>
-      <Bloom
-        intensity={1.5}
-        luminanceThreshold={0.1}
-        luminanceSmoothing={0.9}
-        blendFunction={BlendFunction.SCREEN}
-      />
-      <ChromaticAberration
-        blendFunction={BlendFunction.NORMAL}
-        offset={[0.0005, 0.0012]}
-      />
-    </EffectComposer>
   );
 };
 
@@ -301,7 +278,7 @@ const RetroNeonBackground: React.FC = () => {
   const [effectsEnabled, setEffectsEnabled] = useState(true);
   const [cameraMovement, setCameraMovement] = useState<'orbital' | 'vertical' | 'mixed'>('mixed');
 
-  console.log("Rendering enhanced cyberpunk cityscape with post-processing");
+  console.log("Rendering enhanced cyberpunk cityscape without post-processing");
 
   return (
     <>
@@ -318,14 +295,13 @@ const RetroNeonBackground: React.FC = () => {
             height: '100%',
             background: 'linear-gradient(180deg, #1a0a2e 0%, #16213e 25%, #0f3460 60%, #0a0a1a 100%)'
           }}
-          onCreated={() => console.log("Enhanced cyberpunk environment with post-processing loaded")}
+          onCreated={() => console.log("Enhanced cyberpunk environment loaded")}
         >
           <CyberpunkCamera movementType={cameraMovement} />
           <CyberpunkSkybox />
           <CyberpunkLighting />
           <CyberpunkFloor />
           <CyberpunkCity />
-          <CyberpunkEffects enabled={effectsEnabled} />
         </Canvas>
       </div>
       
