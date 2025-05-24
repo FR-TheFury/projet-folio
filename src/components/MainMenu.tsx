@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Linkedin } from 'lucide-react';
@@ -8,11 +9,14 @@ interface MainMenuProps {
 
 const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
   const menuItems = [
+    // 3 boutons à gauche
     { id: 'projects', label: 'Projets', position: 'top-4 left-4 md:top-12 md:left-12', icon: '🚀' },
-    { id: 'skills', label: 'Compétences', position: 'top-4 right-4 md:top-12 md:right-12', icon: '⚡' },
     { id: 'experience', label: 'Expériences', position: 'top-1/2 left-4 -translate-y-1/2 md:left-12', icon: '🎓' },
-    { id: 'certification', label: 'Certification', position: 'top-1/2 right-4 -translate-y-1/2 md:right-12', icon: '🏆' },
     { id: 'about', label: 'À propos', position: 'bottom-4 left-4 md:bottom-12 md:left-12', icon: '👨‍💻' },
+    
+    // 3 boutons à droite
+    { id: 'skills', label: 'Compétences', position: 'top-4 right-4 md:top-12 md:right-12', icon: '⚡' },
+    { id: 'certification', label: 'Certification', position: 'top-1/2 right-4 -translate-y-1/2 md:right-12', icon: '🏆' },
     { id: 'contact', label: 'Contact', position: 'bottom-4 right-4 md:bottom-12 md:right-12', icon: '📡' },
   ];
 
@@ -115,7 +119,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
           </a>
         </motion.div>
 
-        {/* Menu mobile sans le bouton RSS */}
+        {/* Menu mobile */}
         <motion.div
           className="sm:hidden flex flex-wrap justify-center gap-2 max-w-xs mx-auto"
           initial={{ opacity: 0, y: 20 }}
