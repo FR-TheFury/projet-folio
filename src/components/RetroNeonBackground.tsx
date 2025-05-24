@@ -1,153 +1,339 @@
 
-import React, { useRef, useMemo } from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Points, PointMaterial } from '@react-three/drei';
+import { EffectComposer, Bloom, ChromaticAberration } from '@react-three/postprocessing';
+import { BlendFunction } from 'postprocessing';
 import * as THREE from 'three';
+import PerformanceToggle from './PerformanceToggle';
 
-const NeonCity = () => {
-  const groupRef = useRef<THREE.Group>(null);
+// Skybox Component
+const CyberpunkSkybox = () => {
+  const skyboxRef = useRef<THREE.Mesh>(null);
   
   useFrame((state) => {
-    if (groupRef.current) {
-      groupRef.current.position.z = (state.clock.elapsedTime * 3) % 100 - 50;
+    if (skyboxRef.current) {
+      skyboxRef.current.rotation.y = state.clock.elapsedTime * 0.002;
     }
   });
 
-  const buildings = useMemo(() => {
-    const buildingArray = [];
-    for (let i = 0; i < 80; i++) {
-      const height = Math.random() * 25 + 5;
-      const width = Math.random() * 3 + 1;
-      const depth = Math.random() * 3 + 1;
-      const x = (Math.random() - 0.5) * 200;
-      const z = (Math.random() - 0.5) * 200;
-      const colors = ['#00ffff', '#ff00ff', '#ffff00', '#ff0080'];
-      const color = colors[Math.floor(Math.random() * colors.length)];
-      
-      buildingArray.push(
-        <mesh key={i} position={[x, height / 2, z]}>
-          <boxGeometry args={[width, height, depth]} />
-          <meshBasicMaterial 
-            color={color} 
-            wireframe 
-            transparent 
-            opacity={0.7}
-          />
-        </mesh>
-      );
-    }
-    return buildingArray;
-  }, []);
-
   return (
-    <group ref={groupRef}>
-      {buildings}
-    </group>
-  );
-};
-
-const RetroGrid = () => {
-  const meshRef = useRef<THREE.Mesh>(null);
-  
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.position.z = (state.clock.elapsedTime * 4) % 40 - 20;
-    }
-  });
-
-  const gridGeometry = useMemo(() => {
-    const geometry = new THREE.PlaneGeometry(200, 200, 100, 100);
-    return geometry;
-  }, []);
-
-  return (
-    <mesh ref={meshRef} geometry={gridGeometry} rotation={[-Math.PI / 2, 0, 0]} position={[0, -15, 0]}>
+    <mesh ref={skyboxRef} scale={[600, 600, 600]}>
+      <sphereGeometry args={[1, 32, 32]} />
       <meshBasicMaterial 
-        color="#00ffff" 
-        wireframe 
-        transparent 
-        opacity={0.4}
+        color="#0a0a1a"
+        side={THREE.BackSide}
+        transparent
+        opacity={0.9}
       />
     </mesh>
   );
 };
 
-const NeonParticles = () => {
-  const pointsRef = useRef<THREE.Points>(null);
+// Floor Component
+const CyberpunkFloor = () => {
+  const floorRef = useRef<THREE.Group>(null);
   
-  const particles = useMemo(() => {
-    const positions = new Float32Array(2000 * 3);
-    for (let i = 0; i < 2000; i++) {
-      positions[i * 3] = (Math.random() - 0.5) * 400;
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 200;
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 400;
-    }
-    return positions;
-  }, []);
-
   useFrame((state) => {
-    if (pointsRef.current) {
-      pointsRef.current.rotation.y = state.clock.elapsedTime * 0.02;
-      pointsRef.current.position.z = (state.clock.elapsedTime * 2) % 50 - 25;
+    if (floorRef.current) {
+      const pulse = Math.sin(state.clock.elapsedTime * 1.2) * 0.3 + 0.7;
+      const secondaryPulse = Math.sin(state.clock.elapsedTime * 0.8 + Math.PI) * 0.2 + 0.8;
+      
+      floorRef.current.children.forEach((child, index) => {
+        if (child instanceof THREE.Mesh && child.material instanceof THREE.Material) {
+          const intensity = index % 2 === 0 ? pulse * 0.6 : secondaryPulse * 0.4;
+          (child.material as any).emissiveIntensity = intensity;
+        }
+      });
     }
   });
 
+  const floorElements = useMemo(() => {
+    const elements = [];
+    
+    elements.push(
+      <mesh key="main-floor" position={[0, -80, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[500, 500]} />
+        <meshLambertMaterial 
+          color="#0a0a1a"
+          transparent
+          opacity={0.9}
+        />
+      </mesh>
+    );
+    
+    const gridSize = 400;
+    const divisions = 40;
+    const step = gridSize / divisions;
+    
+    for (let i = 0; i <= divisions; i++) {
+      const z = -gridSize / 2 + i * step;
+      const isMainLine = i % 10 === 0;
+      const isMajorLine = i % 20 === 0;
+      const color = isMajorLine ? "#ff00ff" : (isMainLine ? "#00ffff" : "#004488");
+      const emissive = isMajorLine ? "#cc00cc" : (isMainLine ? "#00aaaa" : "#002266");
+      
+      elements.push(
+        <mesh key={`h-${i}`} position={[0, -79.3, z]}>
+          <boxGeometry args={[gridSize, 0.4, isMajorLine ? 3 : (isMainLine ? 2 : 0.8)]} />
+          <meshLambertMaterial 
+            color={color} 
+            transparent 
+            opacity={isMajorLine ? 0.9 : (isMainLine ? 0.8 : 0.6)}
+            emissive={emissive}
+            emissiveIntensity={0.6}
+          />
+        </mesh>
+      );
+    }
+    
+    for (let i = 0; i <= divisions; i++) {
+      const x = -gridSize / 2 + i * step;
+      const isMainLine = i % 10 === 0;
+      const isMajorLine = i % 20 === 0;
+      const color = isMajorLine ? "#00ffff" : (isMainLine ? "#ff00ff" : "#442288");
+      const emissive = isMajorLine ? "#00aaaa" : (isMainLine ? "#cc00cc" : "#221166");
+      
+      elements.push(
+        <mesh key={`v-${i}`} position={[x, -79.3, 0]}>
+          <boxGeometry args={[isMajorLine ? 3 : (isMainLine ? 2 : 0.8), 0.4, gridSize]} />
+          <meshLambertMaterial 
+            color={color} 
+            transparent 
+            opacity={isMajorLine ? 0.9 : (isMainLine ? 0.8 : 0.6)}
+            emissive={emissive}
+            emissiveIntensity={0.6}
+          />
+        </mesh>
+      );
+    }
+    
+    return elements;
+  }, []);
+
+  return <group ref={floorRef}>{floorElements}</group>;
+};
+
+// City Component
+const CyberpunkCity = () => {
+  const cityRef = useRef<THREE.Group>(null);
+  
+  useFrame((state) => {
+    if (cityRef.current) {
+      cityRef.current.rotation.y = state.clock.elapsedTime * 0.005;
+    }
+  });
+
+  const buildings = useMemo(() => {
+    const buildingArray = [];
+    const citySize = 300;
+    const buildingCount = 80;
+    
+    for (let i = 0; i < buildingCount; i++) {
+      const x = (Math.random() - 0.5) * citySize;
+      const z = (Math.random() - 0.5) * citySize;
+      const baseHeight = Math.random() * 60 + 20;
+      const width = Math.random() * 8 + 4;
+      const depth = Math.random() * 8 + 4;
+      
+      const neonColors = ['#ff00ff', '#00ffff', '#ff0080', '#8000ff', '#0080ff', '#ff4080'];
+      const primaryNeon = neonColors[Math.floor(Math.random() * neonColors.length)];
+      const secondaryNeon = neonColors[Math.floor(Math.random() * neonColors.length)];
+      
+      buildingArray.push(
+        <group key={i} position={[x, baseHeight / 2 - 80, z]}>
+          <mesh>
+            <boxGeometry args={[width, baseHeight, depth]} />
+            <meshLambertMaterial 
+              color="#0a0a0a"
+              transparent
+              opacity={0.95}
+            />
+          </mesh>
+          
+          <mesh>
+            <boxGeometry args={[width + 0.5, baseHeight + 0.5, depth + 0.5]} />
+            <meshLambertMaterial 
+              color={primaryNeon}
+              wireframe
+              transparent
+              opacity={0.8}
+              emissive={primaryNeon}
+              emissiveIntensity={1.2}
+            />
+          </mesh>
+          
+          <mesh position={[width/2 + 0.1, 0, 0]}>
+            <boxGeometry args={[0.3, baseHeight, 0.5]} />
+            <meshLambertMaterial 
+              color={secondaryNeon}
+              transparent
+              opacity={0.9}
+              emissive={secondaryNeon}
+              emissiveIntensity={2}
+            />
+          </mesh>
+          
+          {Array.from({ length: Math.floor(baseHeight / 8) }, (_, floor) => {
+            const windowColor = Math.random() > 0.3 ? '#ffaa00' : '#004488';
+            const emissiveIntensity = Math.random() > 0.3 ? 1.5 : 0.8;
+            
+            return (
+              <group key={floor}>
+                <mesh position={[0, -baseHeight/2 + floor * 8 + 4, depth/2 + 0.1]}>
+                  <planeGeometry args={[width * 0.8, 6]} />
+                  <meshLambertMaterial 
+                    color={windowColor}
+                    transparent
+                    opacity={0.9}
+                    emissive={windowColor}
+                    emissiveIntensity={emissiveIntensity}
+                  />
+                </mesh>
+              </group>
+            );
+          })}
+          
+          <mesh position={[0, baseHeight/2 + 2, 0]}>
+            <boxGeometry args={[width + 2, 1, depth + 2]} />
+            <meshLambertMaterial 
+              color={primaryNeon}
+              transparent
+              opacity={0.7}
+              emissive={primaryNeon}
+              emissiveIntensity={1.8}
+            />
+          </mesh>
+        </group>
+      );
+    }
+    
+    return buildingArray;
+  }, []);
+
+  return <group ref={cityRef}>{buildings}</group>;
+};
+
+// Camera Component
+const CyberpunkCamera = ({ movementType = 'mixed' }: { movementType?: 'orbital' | 'vertical' | 'mixed' }) => {
+  useFrame((state) => {
+    const time = state.clock.elapsedTime * 0.03;
+    
+    switch (movementType) {
+      case 'orbital':
+        state.camera.position.x = Math.sin(time) * 60 + Math.cos(time * 0.7) * 30;
+        state.camera.position.z = Math.cos(time) * 60 + Math.sin(time * 0.7) * 30;
+        state.camera.position.y = 40;
+        break;
+        
+      case 'vertical':
+        state.camera.position.x = 50;
+        state.camera.position.z = 50;
+        state.camera.position.y = 40 + Math.sin(time * 0.5) * 25;
+        break;
+        
+      case 'mixed':
+      default:
+        state.camera.position.x = Math.sin(time) * 60 + Math.cos(time * 0.7) * 30;
+        state.camera.position.z = Math.cos(time) * 60 + Math.sin(time * 0.7) * 30;
+        state.camera.position.y = 40 + Math.sin(time * 0.3) * 15;
+        break;
+    }
+    
+    const lookAtY = -20 + Math.sin(time * 0.2) * 8;
+    state.camera.lookAt(0, lookAtY, 0);
+  });
+  
+  return null;
+};
+
+// Lighting Component
+const CyberpunkLighting = () => {
   return (
-    <Points ref={pointsRef} positions={particles} stride={3} frustumCulled={false}>
-      <PointMaterial
-        transparent
-        color="#ffffff"
-        size={0.8}
-        sizeAttenuation={true}
-        depthWrite={false}
-        opacity={0.6}
+    <>
+      <fog attach="fog" args={['#1a0a2e', 80, 350]} />
+      <ambientLight intensity={0.2} color="#2a2a4a" />
+      <pointLight position={[0, 120, 0]} color="#ff00ff" intensity={6} distance={400} />
+      <pointLight position={[-80, 80, -80]} color="#00ffff" intensity={5} distance={300} />
+      <pointLight position={[80, 80, 80]} color="#ff0080" intensity={5} distance={300} />
+      <pointLight position={[0, 50, -120]} color="#8000ff" intensity={4} distance={250} />
+      <pointLight position={[-40, 60, 40]} color="#0080ff" intensity={3} distance={200} />
+      <pointLight position={[40, 60, -40]} color="#ff4080" intensity={3} distance={200} />
+      <directionalLight 
+        position={[50, 100, 50]} 
+        color="#aa88ff" 
+        intensity={1.5}
+        castShadow 
       />
-    </Points>
+      <directionalLight 
+        position={[-50, 60, -50]} 
+        color="#ff88aa" 
+        intensity={1}
+      />
+      <hemisphereLight 
+        args={["#4a2a8a", "#1a0a3a", 0.4]}
+      />
+    </>
   );
 };
 
-const FlyingCamera = ({ children }: { children: React.ReactNode }) => {
-  const cameraRef = useRef<THREE.Group>(null);
+// Effects Component
+const CyberpunkEffects = ({ enabled = true }: { enabled?: boolean }) => {
+  if (!enabled) return null;
 
-  useFrame((state) => {
-    if (cameraRef.current) {
-      // Mouvement sinusoïdal pour simuler un vol fluide
-      cameraRef.current.position.y = 10 + Math.sin(state.clock.elapsedTime * 0.5) * 3;
-      cameraRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.3) * 0.05;
-    }
-  });
-
-  return <group ref={cameraRef}>{children}</group>;
+  return (
+    <EffectComposer>
+      <Bloom
+        intensity={1.5}
+        luminanceThreshold={0.1}
+        luminanceSmoothing={0.9}
+        blendFunction={BlendFunction.SCREEN}
+      />
+      <ChromaticAberration
+        blendFunction={BlendFunction.NORMAL}
+        offset={[0.0005, 0.0012]}
+      />
+    </EffectComposer>
+  );
 };
 
+// Main Component
 const RetroNeonBackground: React.FC = () => {
+  const [effectsEnabled, setEffectsEnabled] = useState(true);
+  const [cameraMovement, setCameraMovement] = useState<'orbital' | 'vertical' | 'mixed'>('mixed');
+
+  console.log("Rendering enhanced cyberpunk cityscape with post-processing");
+
   return (
-    <div className="fixed inset-0 -z-10">
-      <Canvas
-        camera={{ position: [0, 15, 20], fov: 75 }}
-        style={{ background: 'linear-gradient(180deg, #0a0a0a 0%, #1a0a2e 30%, #16213e 70%, #0a0a0a 100%)' }}
-      >
-        <fog attach="fog" args={['#0a0a0a', 20, 200]} />
-        
-        <FlyingCamera>
-          {/* Grilles rétro qui défilent en continu */}
-          <RetroGrid />
-          
-          {/* Ville néon avec des bâtiments plus nombreux */}
-          <NeonCity />
-          
-          {/* Particules néon */}
-          <NeonParticles />
-        </FlyingCamera>
-        
-        {/* Éclairage d'ambiance renforcé */}
-        <ambientLight intensity={0.2} />
-        <pointLight position={[0, 30, 0]} color="#00ffff" intensity={1} distance={100} />
-        <pointLight position={[-50, 20, -50]} color="#ff00ff" intensity={0.8} distance={80} />
-        <pointLight position={[50, 20, -50]} color="#ffff00" intensity={0.8} distance={80} />
-        <directionalLight position={[10, 30, 10]} color="#00ffff" intensity={0.5} />
-      </Canvas>
-    </div>
+    <>
+      <div className="fixed inset-0 z-[-1] w-full h-full">
+        <Canvas
+          camera={{ 
+            position: [50, 40, 50], 
+            fov: 75,
+            near: 0.1,
+            far: 1000
+          }}
+          style={{ 
+            width: '100%', 
+            height: '100%',
+            background: 'linear-gradient(180deg, #1a0a2e 0%, #16213e 25%, #0f3460 60%, #0a0a1a 100%)'
+          }}
+          onCreated={() => console.log("Enhanced cyberpunk environment with post-processing loaded")}
+        >
+          <CyberpunkCamera movementType={cameraMovement} />
+          <CyberpunkSkybox />
+          <CyberpunkLighting />
+          <CyberpunkFloor />
+          <CyberpunkCity />
+          <CyberpunkEffects enabled={effectsEnabled} />
+        </Canvas>
+      </div>
+      
+      <PerformanceToggle 
+        enabled={effectsEnabled} 
+        onToggle={setEffectsEnabled} 
+      />
+    </>
   );
 };
 

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Linkedin } from 'lucide-react';
@@ -53,9 +52,9 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
           </motion.button>
         ))}
         
-        {/* Bouton Certification centré avec classes Tailwind */}
+        {/* Bouton Certification centré - corrigé */}
         <motion.button
-          className="fixed z-20 bottom-4 md:bottom-12 left-1/2 -translate-x-1/2 group"
+          className="fixed z-20 bottom-4 md:bottom-12 left-1/2 transform -translate-x-1/2 group"
           onClick={() => onOpenModal('certification')}
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -146,7 +145,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
           </a>
         </motion.div>
 
-        {/* Menu mobile - affiché seulement sur très petit écran */}
+        {/* Menu mobile */}
         <motion.div
           className="sm:hidden flex flex-wrap justify-center gap-2 max-w-xs mx-auto"
           initial={{ opacity: 0, y: 20 }}
@@ -175,23 +174,23 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
           Explorez mon univers technologique
         </motion.p>
         
-        {/* Decorative elements - 2 carrés en diagonal plus grands et proches */}
+        {/* Decorative elements - 2 carrés en diagonal plus proches du titre */}
         <div className="hidden md:block">
           <motion.div 
-            className="absolute -top-12 -left-12 w-24 h-24 border-2 border-cyan-400/50 rotate-45"
+            className="absolute -top-6 -left-8 w-16 h-16 border-2 border-cyan-400/60 rotate-45"
             animate={{ 
               rotate: [45, 225, 45],
               scale: [1, 1.2, 1],
-              opacity: [0.5, 0.9, 0.5]
+              opacity: [0.6, 1, 0.6]
             }}
             transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
           />
           <motion.div 
-            className="absolute -bottom-12 -right-12 w-24 h-24 border-2 border-pink-400/50 rotate-45"
+            className="absolute -bottom-6 -right-8 w-16 h-16 border-2 border-pink-400/60 rotate-45"
             animate={{ 
               rotate: [45, -135, 45],
               scale: [1, 1.2, 1],
-              opacity: [0.5, 0.9, 0.5]
+              opacity: [0.6, 1, 0.6]
             }}
             transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
           />
