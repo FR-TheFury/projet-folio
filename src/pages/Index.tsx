@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import LoadingScreen from '@/components/LoadingScreen';
@@ -45,8 +44,11 @@ const Index = () => {
     return <LoadingScreen onLoadingComplete={handleLoadingComplete} />;
   }
 
+  console.log("Index page rendering with RetroNeonBackground");
+
   return (
-    <div className="min-h-screen relative overflow-hidden">
+    <div className="min-h-screen relative">
+      {/* Fond Three.js - doit être le premier élément */}
       <RetroNeonBackground />
       
       <MainMenu onOpenModal={openModal} />
