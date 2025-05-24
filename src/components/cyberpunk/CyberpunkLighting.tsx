@@ -4,36 +4,40 @@ import React from 'react';
 const CyberpunkLighting = () => {
   return (
     <>
-      {/* Brouillard réduit pour plus de visibilité */}
-      <fog attach="fog" args={['#0a0a2e', 100, 400]} />
+      {/* Brouillard cyberpunk plus dense avec tons violets */}
+      <fog attach="fog" args={['#1a0a2e', 80, 350]} />
       
-      {/* Éclairage amélioré - plus lumineux */}
-      <ambientLight intensity={0.4} color="#4a4a6a" />
+      {/* Éclairage ambiant réduit pour plus de contraste néon */}
+      <ambientLight intensity={0.2} color="#2a2a4a" />
       
-      {/* Éclairages principaux plus intenses */}
-      <pointLight position={[0, 100, 0]} color="#6688ff" intensity={4} distance={300} />
-      <pointLight position={[-60, 60, -60]} color="#ff6688" intensity={3} distance={200} />
-      <pointLight position={[60, 60, 60]} color="#66ffaa" intensity={3} distance={200} />
-      <pointLight position={[0, 30, -100]} color="#ffaa66" intensity={2.5} distance={180} />
+      {/* Éclairages néon principaux plus intenses */}
+      <pointLight position={[0, 120, 0]} color="#ff00ff" intensity={6} distance={400} />
+      <pointLight position={[-80, 80, -80]} color="#00ffff" intensity={5} distance={300} />
+      <pointLight position={[80, 80, 80]} color="#ff0080" intensity={5} distance={300} />
+      <pointLight position={[0, 50, -120]} color="#8000ff" intensity={4} distance={250} />
       
-      {/* Éclairage directionnel principal */}
+      {/* Éclairages colorés supplémentaires pour l'atmosphère */}
+      <pointLight position={[-40, 60, 40]} color="#0080ff" intensity={3} distance={200} />
+      <pointLight position={[40, 60, -40]} color="#ff4080" intensity={3} distance={200} />
+      
+      {/* Éclairage directionnel principal teinté */}
       <directionalLight 
-        position={[30, 80, 30]} 
-        color="#aabbff" 
-        intensity={2}
+        position={[50, 100, 50]} 
+        color="#aa88ff" 
+        intensity={1.5}
         castShadow 
       />
       
-      {/* Éclairage de remplissage */}
+      {/* Éclairage de remplissage coloré */}
       <directionalLight 
-        position={[-30, 40, -30]} 
-        color="#ffaabb" 
-        intensity={1.5}
+        position={[-50, 60, -50]} 
+        color="#ff88aa" 
+        intensity={1}
       />
       
-      {/* Éclairage ambiant supplémentaire pour la visibilité */}
+      {/* Éclairage hémisphérique cyberpunk */}
       <hemisphereLight 
-        args={["#4a6aaa", "#2a2a4a", 0.6]}
+        args={["#4a2a8a", "#1a0a3a", 0.4]}
       />
     </>
   );

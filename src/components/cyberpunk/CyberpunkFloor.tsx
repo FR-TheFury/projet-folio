@@ -8,11 +8,14 @@ const CyberpunkFloor = () => {
   
   useFrame((state) => {
     if (floorRef.current) {
-      // Pulsation subtile de la grille
-      const pulse = Math.sin(state.clock.elapsedTime * 0.8) * 0.1 + 0.9;
-      floorRef.current.children.forEach((child) => {
+      // Pulsation plus intense de la grille
+      const pulse = Math.sin(state.clock.elapsedTime * 1.2) * 0.3 + 0.7;
+      const secondaryPulse = Math.sin(state.clock.elapsedTime * 0.8 + Math.PI) * 0.2 + 0.8;
+      
+      floorRef.current.children.forEach((child, index) => {
         if (child instanceof THREE.Mesh && child.material instanceof THREE.Material) {
-          (child.material as any).emissiveIntensity = pulse * 0.3;
+          const intensity = index % 2 === 0 ? pulse * 0.6 : secondaryPulse * 0.4;
+          (child.material as any).emissiveIntensity = intensity;
         }
       });
     }
@@ -21,54 +24,62 @@ const CyberpunkFloor = () => {
   const floorElements = useMemo(() => {
     const elements = [];
     
-    // Plan de sol principal
+    // Plan de sol principal plus sombre
     elements.push(
       <mesh key="main-floor" position={[0, -80, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[500, 500]} />
         <meshLambertMaterial 
-          color="#1a1a2e"
+          color="#0a0a1a"
           transparent
-          opacity={0.8}
+          opacity={0.9}
         />
       </mesh>
     );
     
-    // Grille néon principale
+    // Grille néon améliorée
     const gridSize = 400;
     const divisions = 40;
     const step = gridSize / divisions;
     
-    // Lignes principales horizontales (cyan)
+    // Lignes principales horizontales (cyan/magenta alternées)
     for (let i = 0; i <= divisions; i++) {
       const z = -gridSize / 2 + i * step;
       const isMainLine = i % 10 === 0;
+      const isMajorLine = i % 20 === 0;
+      const color = isMajorLine ? "#ff00ff" : (isMainLine ? "#00ffff" : "#004488");
+      const emissive = isMajorLine ? "#cc00cc" : (isMainLine ? "#00aaaa" : "#002266");
+      
       elements.push(
-        <mesh key={`h-${i}`} position={[0, -79.5, z]}>
-          <boxGeometry args={[gridSize, 0.2, isMainLine ? 2 : 0.5]} />
+        <mesh key={`h-${i}`} position={[0, -79.3, z]}>
+          <boxGeometry args={[gridSize, 0.4, isMajorLine ? 3 : (isMainLine ? 2 : 0.8)]} />
           <meshLambertMaterial 
-            color={isMainLine ? "#00aaff" : "#004466"} 
+            color={color} 
             transparent 
-            opacity={isMainLine ? 0.8 : 0.6}
-            emissive={isMainLine ? "#0088cc" : "#002244"}
-            emissiveIntensity={0.3}
+            opacity={isMajorLine ? 0.9 : (isMainLine ? 0.8 : 0.6)}
+            emissive={emissive}
+            emissiveIntensity={0.6}
           />
         </mesh>
       );
     }
     
-    // Lignes principales verticales (magenta)
+    // Lignes principales verticales (magenta/cyan alternées)
     for (let i = 0; i <= divisions; i++) {
       const x = -gridSize / 2 + i * step;
       const isMainLine = i % 10 === 0;
+      const isMajorLine = i % 20 === 0;
+      const color = isMajorLine ? "#00ffff" : (isMainLine ? "#ff00ff" : "#442288");
+      const emissive = isMajorLine ? "#00aaaa" : (isMainLine ? "#cc00cc" : "#221166");
+      
       elements.push(
-        <mesh key={`v-${i}`} position={[x, -79.5, 0]}>
-          <boxGeometry args={[isMainLine ? 2 : 0.5, 0.2, gridSize]} />
+        <mesh key={`v-${i}`} position={[x, -79.3, 0]}>
+          <boxGeometry args={[isMajorLine ? 3 : (isMainLine ? 2 : 0.8), 0.4, gridSize]} />
           <meshLambertMaterial 
-            color={isMainLine ? "#ff00aa" : "#442266"} 
+            color={color} 
             transparent 
-            opacity={isMainLine ? 0.8 : 0.6}
-            emissive={isMainLine ? "#cc0088" : "#221144"}
-            emissiveIntensity={0.3}
+            opacity={isMajorLine ? 0.9 : (isMainLine ? 0.8 : 0.6)}
+            emissive={emissive}
+            emissiveIntensity={0.6}
           />
         </mesh>
       );

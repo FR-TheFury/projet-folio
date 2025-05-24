@@ -24,46 +24,80 @@ const CyberpunkCity = () => {
       const width = Math.random() * 8 + 4;
       const depth = Math.random() * 8 + 4;
       
+      // Random neon colors for variety
+      const neonColors = ['#ff00ff', '#00ffff', '#ff0080', '#8000ff', '#0080ff', '#ff4080'];
+      const primaryNeon = neonColors[Math.floor(Math.random() * neonColors.length)];
+      const secondaryNeon = neonColors[Math.floor(Math.random() * neonColors.length)];
+      
       buildingArray.push(
         <group key={i} position={[x, baseHeight / 2 - 80, z]}>
-          {/* Building principal avec couleur plus claire */}
+          {/* Building principal avec matériau plus sombre pour contraste */}
           <mesh>
             <boxGeometry args={[width, baseHeight, depth]} />
             <meshLambertMaterial 
-              color="#2a2a3a"
+              color="#0a0a0a"
               transparent
-              opacity={0.9}
+              opacity={0.95}
             />
           </mesh>
           
-          {/* Contours subtils */}
+          {/* Contours néon plus intenses */}
           <mesh>
-            <boxGeometry args={[width + 0.3, baseHeight + 0.3, depth + 0.3]} />
+            <boxGeometry args={[width + 0.5, baseHeight + 0.5, depth + 0.5]} />
             <meshLambertMaterial 
-              color="#004488"
+              color={primaryNeon}
               wireframe
               transparent
-              opacity={0.5}
-              emissive="#002244"
-              emissiveIntensity={0.2}
+              opacity={0.8}
+              emissive={primaryNeon}
+              emissiveIntensity={1.2}
             />
           </mesh>
           
-          {/* Fenêtres éclairées */}
-          {Array.from({ length: Math.floor(baseHeight / 8) }, (_, floor) => (
-            <group key={floor}>
-              <mesh position={[0, -baseHeight/2 + floor * 8 + 4, depth/2 + 0.1]}>
-                <planeGeometry args={[width * 0.8, 6]} />
-                <meshLambertMaterial 
-                  color={Math.random() > 0.7 ? "#ffaa44" : "#333344"}
-                  transparent
-                  opacity={0.8}
-                  emissive={Math.random() > 0.7 ? "#aa6622" : "#111122"}
-                  emissiveIntensity={0.4}
-                />
-              </mesh>
-            </group>
-          ))}
+          {/* Bandes néon verticales */}
+          <mesh position={[width/2 + 0.1, 0, 0]}>
+            <boxGeometry args={[0.3, baseHeight, 0.5]} />
+            <meshLambertMaterial 
+              color={secondaryNeon}
+              transparent
+              opacity={0.9}
+              emissive={secondaryNeon}
+              emissiveIntensity={2}
+            />
+          </mesh>
+          
+          {/* Fenêtres néon améliorées */}
+          {Array.from({ length: Math.floor(baseHeight / 8) }, (_, floor) => {
+            const windowColor = Math.random() > 0.3 ? '#ffaa00' : '#004488';
+            const emissiveIntensity = Math.random() > 0.3 ? 1.5 : 0.8;
+            
+            return (
+              <group key={floor}>
+                <mesh position={[0, -baseHeight/2 + floor * 8 + 4, depth/2 + 0.1]}>
+                  <planeGeometry args={[width * 0.8, 6]} />
+                  <meshLambertMaterial 
+                    color={windowColor}
+                    transparent
+                    opacity={0.9}
+                    emissive={windowColor}
+                    emissiveIntensity={emissiveIntensity}
+                  />
+                </mesh>
+              </group>
+            );
+          })}
+          
+          {/* Néon de toit pulsant */}
+          <mesh position={[0, baseHeight/2 + 2, 0]}>
+            <boxGeometry args={[width + 2, 1, depth + 2]} />
+            <meshLambertMaterial 
+              color={primaryNeon}
+              transparent
+              opacity={0.7}
+              emissive={primaryNeon}
+              emissiveIntensity={1.8}
+            />
+          </mesh>
         </group>
       );
     }
