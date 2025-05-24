@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import LoadingScreen from '@/components/LoadingScreen';
-import ParticleBackground from '@/components/ParticleBackground';
+import RetroNeonBackground from '@/components/RetroNeonBackground';
 import MainMenu from '@/components/MainMenu';
 import ProjectsModal from '@/components/modals/ProjectsModal';
 import AboutModal from '@/components/modals/AboutModal';
@@ -47,7 +47,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen relative overflow-hidden">
-      <ParticleBackground />
+      <RetroNeonBackground />
       
       <MainMenu onOpenModal={openModal} />
 

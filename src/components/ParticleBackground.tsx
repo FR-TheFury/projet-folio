@@ -6,11 +6,12 @@ import type { Container, Engine } from 'tsparticles-engine';
 
 const ParticleBackground: React.FC = () => {
   const particlesInit = useCallback(async (engine: Engine) => {
+    console.log("Initializing particles...");
     await loadSlim(engine);
   }, []);
 
   const particlesLoaded = useCallback(async (container?: Container) => {
-    console.log("Particles loaded", container);
+    console.log("Particles loaded successfully", container);
   }, []);
 
   return (
@@ -35,7 +36,9 @@ const ParticleBackground: React.FC = () => {
               enable: true,
               mode: "repulse",
             },
-            resize: true,
+            resize: {
+              enable: true,
+            },
           },
           modes: {
             push: {
@@ -58,9 +61,6 @@ const ParticleBackground: React.FC = () => {
             opacity: 0.4,
             width: 2,
           },
-          collisions: {
-            enable: true,
-          },
           move: {
             direction: "none",
             enable: true,
@@ -76,7 +76,7 @@ const ParticleBackground: React.FC = () => {
               enable: true,
               area: 800,
             },
-            value: 100,
+            value: 80,
           },
           opacity: {
             value: 0.8,
