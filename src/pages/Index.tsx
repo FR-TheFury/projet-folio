@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import LoadingScreen from '@/components/LoadingScreen';
@@ -7,7 +8,6 @@ import ProjectsModal from '@/components/modals/ProjectsModal';
 import AboutModal from '@/components/modals/AboutModal';
 import ContactModal from '@/components/modals/ContactModal';
 import ExperienceModal from '@/components/modals/ExperienceModal';
-import RSSModal from '@/components/modals/RSSModal';
 import CertificationModal from '@/components/modals/CertificationModal';
 import SkillsModal from '@/components/modals/SkillsModal';
 
@@ -68,9 +68,6 @@ const Index = () => {
         )}
         {activeModal === 'experience' && (
           <ExperienceModal isOpen={true} onClose={closeModal} />
-        )}
-        {activeModal === 'rss' && (
-          <RSSModal isOpen={true} onClose={closeModal} />
         )}
         {activeModal === 'certification' && (
           <CertificationModal isOpen={true} onClose={closeModal} />

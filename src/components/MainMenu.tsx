@@ -13,7 +13,6 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
     { id: 'experience', label: 'Expériences', position: 'top-1/2 left-4 -translate-y-1/2 md:left-12', icon: '🎓' },
     { id: 'about', label: 'À propos', position: 'bottom-4 left-4 md:bottom-12 md:left-12', icon: '👨‍💻' },
     { id: 'contact', label: 'Contact', position: 'bottom-4 right-4 md:bottom-12 md:right-12', icon: '📡' },
-    { id: 'rss', label: 'Flux RSS', position: 'top-1/2 right-4 -translate-y-1/2 md:right-12', icon: '📊' },
   ];
 
   return (
@@ -52,13 +51,13 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
           </motion.button>
         ))}
         
-        {/* Bouton Certification centré - corrigé */}
+        {/* Bouton Certification centré */}
         <motion.button
           className="fixed z-20 bottom-4 md:bottom-12 left-1/2 transform -translate-x-1/2 group"
           onClick={() => onOpenModal('certification')}
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 6 * 0.15 + 1, duration: 0.5 }}
+          transition={{ delay: 5 * 0.15 + 1, duration: 0.5 }}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
         >
@@ -145,7 +144,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
           </a>
         </motion.div>
 
-        {/* Menu mobile */}
+        {/* Menu mobile sans le bouton RSS */}
         <motion.div
           className="sm:hidden flex flex-wrap justify-center gap-2 max-w-xs mx-auto"
           initial={{ opacity: 0, y: 20 }}
