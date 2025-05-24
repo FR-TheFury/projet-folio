@@ -14,7 +14,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
     { id: 'about', label: 'À propos', position: 'bottom-4 left-4 md:bottom-12 md:left-12', icon: '👨‍💻' },
     { id: 'contact', label: 'Contact', position: 'bottom-4 right-4 md:bottom-12 md:right-12', icon: '📡' },
     { id: 'rss', label: 'Flux RSS', position: 'top-1/2 right-4 -translate-y-1/2 md:right-12', icon: '📊' },
-    { id: 'certification', label: 'Certification', position: 'bottom-4 left-1/2 -translate-x-1/2 md:bottom-12 md:left-1/2 md:-translate-x-1/2', icon: '🏆' },
+    { id: 'certification', label: 'Certification', position: 'bottom-4 left-1/2 -translate-x-1/2 md:bottom-12', icon: '🏆' },
   ];
 
   return (
