@@ -36,9 +36,7 @@ const ParticleBackground: React.FC = () => {
               enable: true,
               mode: "repulse",
             },
-            resize: {
-              enable: true,
-            },
+            resize: true,
           },
           modes: {
             push: {
