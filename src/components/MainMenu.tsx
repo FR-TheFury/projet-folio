@@ -11,6 +11,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
     { id: 'projects', label: 'Projets', position: 'top-4 left-4 md:top-12 md:left-12', icon: '🚀' },
     { id: 'skills', label: 'Compétences', position: 'top-4 right-4 md:top-12 md:right-12', icon: '⚡' },
     { id: 'experience', label: 'Expériences', position: 'top-1/2 left-4 -translate-y-1/2 md:left-12', icon: '🎓' },
+    { id: 'certification', label: 'Certification', position: 'top-1/2 right-4 -translate-y-1/2 md:right-12', icon: '🏆' },
     { id: 'about', label: 'À propos', position: 'bottom-4 left-4 md:bottom-12 md:left-12', icon: '👨‍💻' },
     { id: 'contact', label: 'Contact', position: 'bottom-4 right-4 md:bottom-12 md:right-12', icon: '📡' },
   ];
@@ -50,36 +51,6 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
             </div>
           </motion.button>
         ))}
-        
-        {/* Bouton Certification centré */}
-        <motion.button
-          className="fixed z-20 bottom-4 md:bottom-12 left-1/2 transform -translate-x-1/2 group"
-          onClick={() => onOpenModal('certification')}
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 5 * 0.15 + 1, duration: 0.5 }}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          <div className="relative">
-            {/* Glow effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 rounded-xl blur-md opacity-75 group-hover:opacity-100 transition-opacity duration-300"></div>
-            
-            {/* Main button */}
-            <div className="relative bg-black/80 backdrop-blur-md border border-cyan-400/50 rounded-xl px-3 py-2 md:px-6 md:py-3 flex items-center space-x-2 md:space-x-3 group-hover:border-cyan-300 transition-all duration-300">
-              <span className="text-lg md:text-2xl filter drop-shadow-[0_0_8px_rgba(0,255,255,0.8)]">🏆</span>
-              <span className="text-cyan-300 font-bold text-xs md:text-sm tracking-wider uppercase group-hover:text-white transition-colors duration-300 font-mono">
-                Certification
-              </span>
-            </div>
-            
-            {/* Corner accents */}
-            <div className="absolute -top-1 -left-1 w-3 h-3 border-t-2 border-l-2 border-cyan-400 group-hover:border-pink-400 transition-colors duration-300"></div>
-            <div className="absolute -top-1 -right-1 w-3 h-3 border-t-2 border-r-2 border-cyan-400 group-hover:border-pink-400 transition-colors duration-300"></div>
-            <div className="absolute -bottom-1 -left-1 w-3 h-3 border-b-2 border-l-2 border-cyan-400 group-hover:border-pink-400 transition-colors duration-300"></div>
-            <div className="absolute -bottom-1 -right-1 w-3 h-3 border-b-2 border-r-2 border-cyan-400 group-hover:border-pink-400 transition-colors duration-300"></div>
-          </div>
-        </motion.button>
       </div>
       
       {/* Contenu central parfaitement centré */}
@@ -151,7 +122,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.6, duration: 0.8 }}
         >
-          {[...menuItems, { id: 'certification', label: 'Certification', icon: '🏆' }].map((item) => (
+          {menuItems.map((item) => (
             <button
               key={item.id}
               onClick={() => onOpenModal(item.id)}
