@@ -16,7 +16,6 @@ const ProjectsModal: React.FC<ProjectsModalProps> = ({ isOpen, onClose }) => {
       tech: ["React", "TypeScript", "Framer Motion", "Tailwind", "Three.js"],
       status: "En ligne",
       statusColor: "bg-green-500/20 text-green-300",
-      githubUrl: "#",
       liveUrl: window.location.href
     },
     {
@@ -25,17 +24,15 @@ const ProjectsModal: React.FC<ProjectsModalProps> = ({ isOpen, onClose }) => {
       tech: ["PrestaShop","TPL", "PHP", "JavaScript", "CSS"],
       status: "En ligne",
       statusColor: "bg-green-500/20 text-green-300",
-      githubUrl: "#",
       liveUrl: "https://firelovers.fr"
     },
     {
       title: "Gallery VRChat",
       description: "Site personnel de galerie pour mes créations et expériences dans l'univers VRChat",
-      tech: ["React", "CSS", "TypeScript", "Tailwind", "JavaScript"],
+      tech: ["React", "CSS", "TypeScript", "Tailwind", "JavaScript", "Contenue 3D (18+)", "Contenue AI"],
       status: "En ligne",
       statusColor: "bg-green-500/20 text-green-300",
-      githubUrl: "#",
-      liveUrl: "#"
+      liveUrl: "https://www.himely-puppy.ovh"
     },
     {
       title: "100 Jours 100 Programmes",
@@ -43,8 +40,7 @@ const ProjectsModal: React.FC<ProjectsModalProps> = ({ isOpen, onClose }) => {
       tech: ["Python", "JavaScript", "Java", "C#", "React"],
       status: "En cours",
       statusColor: "bg-yellow-500/20 text-yellow-300",
-      githubUrl: "#",
-      liveUrl: "#"
+      githubUrl: "https://github.com/TheFury59/100jours-100Programmes",
     },
     {
       title: "Portfolio BTS (V1)",
@@ -52,8 +48,15 @@ const ProjectsModal: React.FC<ProjectsModalProps> = ({ isOpen, onClose }) => {
       tech: ["HTML", "CSS", "JavaScript", "Three.js"],
       status: "EN ligne (Discontinued)",
       statusColor: "bg-green-500/20 text-green-300",
-      githubUrl: "https://thefury59.github.io/PortFolio/",
+      githubUrl: "https://github.com/TheFury59/PortFolio",
       liveUrl: "https://thefury59.github.io/PortFolio/"
+    },
+    {
+      title: "D'Autres Petits Projets",
+      description: "D'Autres petits projets son disponible directement sur mon github",
+      tech: ["Tout Type"],
+      statusColor: "bg-green-500/20 text-green-300",
+      githubUrl: "https://github.com/TheFury59",
     },
   ];
 
