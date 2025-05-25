@@ -10,7 +10,7 @@ interface ContactModalProps {
 
 const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
   const contacts = [
-    { icon: Mail, label: "Email", value: "teodebaysio@gmail.com", link: "mailto:teodebaysio@gmail.com" },
+    { icon: Mail, label: "Email", value: "teodebaypro@gmail.com", link: "mailto:teodebaypro@gmail.com" },
     { icon: Phone, label: "Téléphone", value: "07.86.42.23.77", link: "tel:0786422377" },
     { icon: MapPin, label: "Localisation", value: "Ham-en-Artois, 62190", link: null },
     { icon: Linkedin, label: "LinkedIn", value: "Téo Debay", link: "https://linkedin.com/in/teo-debay" }

@@ -65,7 +65,7 @@ const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
   ];
 
   const sports = [
-    "Natation", "Airsoft", "Golf", "Tennis", "Plongée", "Équitation"
+    "Natation", "Airsoft", "Golf", "Tennis", "Plongée", "Équitation", "Autre"
   ];
 
   return (

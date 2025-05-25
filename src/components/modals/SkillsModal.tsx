@@ -18,12 +18,12 @@ const SkillsModal: React.FC<SkillsModalProps> = ({ isOpen, onClose }) => {
     { name: "SQL", level: 85, color: "bg-green-400" },
     { name: "Python", level: 75, color: "bg-yellow-400" },
     { name: "Java", level: 70, color: "bg-orange-400" },
-    { name: "C#", level: 65, color: "bg-purple-400" },
+    { name: "C#", level: 20, color: "bg-purple-400" },
     { name: "Angular", level: 70, color: "bg-red-400" },
     { name: "WordPress", level: 80, color: "bg-blue-400" },
-    { name: "PrestaShop", level: 75, color: "bg-pink-400" },
+    { name: "PrestaShop", level: 55, color: "bg-pink-400" },
     { name: "Unity", level: 70, color: "bg-green-400" },
-    { name: "Blender", level: 65, color: "bg-cyan-400" }
+    { name: "Blender", level: 30, color: "bg-cyan-400" }
   ];
 
   const specializations = [

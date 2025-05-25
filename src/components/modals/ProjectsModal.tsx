@@ -22,7 +22,7 @@ const ProjectsModal: React.FC<ProjectsModalProps> = ({ isOpen, onClose }) => {
     {
       title: "Firelovers",
       description: "Site web professionnel pour l'entreprise de mon père, développé avec une approche moderne et responsive",
-      tech: ["WordPress", "PHP", "JavaScript", "CSS"],
+      tech: ["PrestaShop","TPL", "PHP", "JavaScript", "CSS"],
       status: "En ligne",
       statusColor: "bg-green-500/20 text-green-300",
       githubUrl: "#",
@@ -31,7 +31,7 @@ const ProjectsModal: React.FC<ProjectsModalProps> = ({ isOpen, onClose }) => {
     {
       title: "Gallery VRChat",
       description: "Site personnel de galerie pour mes créations et expériences dans l'univers VRChat",
-      tech: ["React", "CSS", "JavaScript"],
+      tech: ["React", "CSS", "TypeScript", "Tailwind", "JavaScript"],
       status: "En ligne",
       statusColor: "bg-green-500/20 text-green-300",
       githubUrl: "#",
