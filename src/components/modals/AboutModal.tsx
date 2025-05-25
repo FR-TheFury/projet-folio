@@ -232,7 +232,7 @@ const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
             <PDFViewer
               isOpen={showPDF}
               onClose={() => setShowPDF(false)}
-              pdfUrl="/cv.pdf"
+              pdfUrl="/assets/cv.pdf"
             />
           )}
         </motion.div>
