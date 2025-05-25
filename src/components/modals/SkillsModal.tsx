@@ -28,9 +28,9 @@ const SkillsModal: React.FC<SkillsModalProps> = ({ isOpen, onClose }) => {
 
   const specializations = [
     { name: "Dev Full Stack (Frontend & Backend)", level: 90, color: "bg-gradient-to-r from-cyan-400 to-purple-400" },
-    { name: "Sites Web (Code & Low-code)", level: 85, color: "bg-gradient-to-r from-purple-400 to-pink-400" },
-    { name: "Base de données", level: 80, color: "bg-gradient-to-r from-green-400 to-cyan-400" },
-    { name: "Programmes et applications", level: 75, color: "bg-gradient-to-r from-yellow-400 to-orange-400" }
+    { name: "Sites Web (Code & Low-code)", level: 80, color: "bg-gradient-to-r from-purple-400 to-pink-400" },
+    { name: "Base de données", level: 35, color: "bg-gradient-to-r from-green-400 to-cyan-400" },
+    { name: "Programmes et applications", level: 20, color: "bg-gradient-to-r from-yellow-400 to-orange-400" }
   ];
 
   const languages = [

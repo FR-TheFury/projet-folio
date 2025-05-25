@@ -95,7 +95,7 @@ const MainMenu: React.FC<MainMenuProps> = ({ onOpenModal }) => {
             transition={{ delay: 0.3, duration: 0.8 }}
           >
             <p className="text-base sm:text-lg md:text-2xl text-gray-100 leading-relaxed font-semibold drop-shadow-[0_0_10px_rgba(0,0,0,0.8)]">
-              Développeur Full Stack / Web Designer / Humain
+              Développeur Full Stack / Web
             </p>
             <p className="text-sm sm:text-base md:text-lg text-gray-200 font-medium drop-shadow-[0_0_8px_rgba(0,0,0,0.8)]">
               Sérieux • Volontaire • Motivé • Curieux

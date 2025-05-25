@@ -53,7 +53,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onLoadingComplete }) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7 }}
         >
-          Développeur Web & Passionné d'Espace
+          Développeur Web & Passionné
         </motion.p>
         
         <div className="w-64 bg-gray-800 rounded-full h-2 mx-auto">
