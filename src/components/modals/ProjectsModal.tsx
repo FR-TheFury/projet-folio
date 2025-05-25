@@ -11,7 +11,7 @@ interface ProjectsModalProps {
 const ProjectsModal: React.FC<ProjectsModalProps> = ({ isOpen, onClose }) => {
   const projects = [
     {
-      title: "Portfolio Spatial",
+      title: "Portfolio Officiel (V2)",
       description: "Site portfolio personnel avec thème spatial et animations futuristes créé avec React, TypeScript et Framer Motion",
       tech: ["React", "TypeScript", "Framer Motion", "Tailwind", "Three.js"],
       status: "En ligne",
@@ -45,7 +45,16 @@ const ProjectsModal: React.FC<ProjectsModalProps> = ({ isOpen, onClose }) => {
       statusColor: "bg-yellow-500/20 text-yellow-300",
       githubUrl: "#",
       liveUrl: "#"
-    }
+    },
+    {
+      title: "Portfolio BTS (V1)",
+      description: "Site portfolio personnel avec le contenue de mes stage et de mes cours, lors de mon BTS SIO",
+      tech: ["HTML", "CSS", "JavaScript", "Three.js"],
+      status: "EN ligne (Discontinued)",
+      statusColor: "bg-green-500/20 text-green-300",
+      githubUrl: "https://thefury59.github.io/PortFolio/",
+      liveUrl: "https://thefury59.github.io/PortFolio/"
+    },
   ];
 
   return (
