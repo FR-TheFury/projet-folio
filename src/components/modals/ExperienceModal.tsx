@@ -125,25 +125,28 @@ const ExperienceModal: React.FC<ExperienceModalProps> = ({ isOpen, onClose }) =>
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
                     >
-                      <div className="flex justify-between items-start mb-4">
-                        <div className="flex items-start gap-3">
+                      {/* Header - amélioration mobile */}
+                      <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-4 mb-4">
+                        <div className="flex items-start gap-3 flex-1">
                           <div className={`p-2 bg-${exp.color}-500/20 rounded-lg`}>
                             <Briefcase className={`text-${exp.color}-300`} size={20} />
                           </div>
-                          <div>
+                          <div className="flex-1">
                             <h3 className={`text-xl font-bold text-${exp.color}-300 mb-1`}>{exp.title}</h3>
                             <p className="text-purple-300 font-medium">{exp.company}</p>
                             <p className="text-sm text-cyan-200">{exp.type}</p>
                           </div>
                         </div>
-                        <div className="text-right text-sm text-cyan-100">
-                          <div className="flex items-center gap-1 mb-1">
+                        
+                        {/* Informations temporelles et géographiques - séparées en mobile */}
+                        <div className="lg:text-right text-sm text-cyan-100 space-y-1 lg:space-y-1">
+                          <div className="flex items-center gap-1">
                             <Calendar size={14} />
-                            {exp.period}
+                            <span>{exp.period}</span>
                           </div>
                           <div className="flex items-center gap-1">
                             <MapPin size={14} />
-                            {exp.location}
+                            <span>{exp.location}</span>
                           </div>
                         </div>
                       </div>

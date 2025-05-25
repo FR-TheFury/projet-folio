@@ -18,6 +18,7 @@ interface CertificationViewerProps {
 
 const CertificationViewer: React.FC<CertificationViewerProps> = ({ isOpen, onClose, certification }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [imageErrors, setImageErrors] = useState<{ [key: string]: boolean }>({});
 
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev + 1) % certification.images.length);
@@ -26,6 +27,20 @@ const CertificationViewer: React.FC<CertificationViewerProps> = ({ isOpen, onClo
   const prevImage = () => {
     setCurrentImageIndex((prev) => (prev - 1 + certification.images.length) % certification.images.length);
   };
+
+  const handleImageError = (imagePath: string) => {
+    setImageErrors(prev => ({ ...prev, [imagePath]: true }));
+  };
+
+  const NoVisualMessage = () => (
+    <div className="flex items-center justify-center h-full bg-black/50 rounded-lg border-2 border-dashed border-cyan-400/50">
+      <div className="text-center p-8">
+        <div className="text-6xl mb-4">📄</div>
+        <p className="text-cyan-300 text-lg font-semibold">Pas de visuel pour cette certification</p>
+        <p className="text-cyan-100 text-sm mt-2">Le certificat n'est pas disponible en format image</p>
+      </div>
+    </div>
+  );
 
   return (
     <AnimatePresence>
@@ -69,14 +84,21 @@ const CertificationViewer: React.FC<CertificationViewerProps> = ({ isOpen, onClo
 
             {/* Image Display */}
             <div className="relative h-[70vh] flex items-center justify-center bg-black/50">
-              <img
-                src={certification.images[currentImageIndex]}
-                alt={`${certification.title} certification ${currentImageIndex + 1}`}
-                className="max-w-full max-h-full object-contain rounded-lg"
-              />
+              {certification.images.length === 0 ? (
+                <NoVisualMessage />
+              ) : imageErrors[certification.images[currentImageIndex]] ? (
+                <NoVisualMessage />
+              ) : (
+                <img
+                  src={certification.images[currentImageIndex]}
+                  alt={`${certification.title} certification ${currentImageIndex + 1}`}
+                  className="max-w-full max-h-full object-contain rounded-lg"
+                  onError={() => handleImageError(certification.images[currentImageIndex])}
+                />
+              )}
 
-              {/* Navigation arrows (only if multiple images) */}
-              {certification.images.length > 1 && (
+              {/* Navigation arrows (only if multiple images and images exist) */}
+              {certification.images.length > 1 && !imageErrors[certification.images[currentImageIndex]] && (
                 <>
                   <button
                     onClick={prevImage}
@@ -95,7 +117,7 @@ const CertificationViewer: React.FC<CertificationViewerProps> = ({ isOpen, onClo
             </div>
 
             {/* Image counter */}
-            {certification.images.length > 1 && (
+            {certification.images.length > 1 && !imageErrors[certification.images[currentImageIndex]] && (
               <div className="p-4 text-center">
                 <span className="text-cyan-300">
                   {currentImageIndex + 1} / {certification.images.length}

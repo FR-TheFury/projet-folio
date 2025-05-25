@@ -104,9 +104,10 @@ const ProjectsModal: React.FC<ProjectsModalProps> = ({ isOpen, onClose }) => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}
                     >
-                      <div className="flex justify-between items-start mb-6">
-                        <h3 className="text-2xl font-bold text-cyan-300">{project.title}</h3>
-                        <span className={`px-3 py-1 text-sm rounded-full ${project.statusColor}`}>
+                      {/* Header avec titre et statut - amélioration mobile */}
+                      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 mb-6">
+                        <h3 className="text-2xl font-bold text-cyan-300 flex-1">{project.title}</h3>
+                        <span className={`self-start px-3 py-1 text-sm rounded-full whitespace-nowrap ${project.statusColor}`}>
                           {project.status}
                         </span>
                       </div>
@@ -121,12 +122,12 @@ const ProjectsModal: React.FC<ProjectsModalProps> = ({ isOpen, onClose }) => {
                         ))}
                       </div>
                       
-                      <div className="flex gap-4">
+                      <div className="flex flex-col sm:flex-row gap-4">
                         <a
                           href={project.githubUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center gap-2 px-4 py-2 border border-cyan-400/50 text-cyan-300 hover:bg-cyan-400/10 transition-colors rounded"
+                          className="flex items-center justify-center gap-2 px-4 py-2 border border-cyan-400/50 text-cyan-300 hover:bg-cyan-400/10 transition-colors rounded"
                         >
                           <Github size={18} />
                           Code
@@ -135,7 +136,7 @@ const ProjectsModal: React.FC<ProjectsModalProps> = ({ isOpen, onClose }) => {
                           href={project.liveUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 transition-colors rounded font-semibold"
+                          className="flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 transition-colors rounded font-semibold"
                         >
                           <ExternalLink size={18} />
                           Voir le site

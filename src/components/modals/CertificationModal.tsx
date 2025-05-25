@@ -21,7 +21,7 @@ const CertificationModal: React.FC<CertificationModalProps> = ({ isOpen, onClose
       description: "Certification en cybersécurité et sécurité des systèmes d'information",
       color: "cyan",
       status: "Obtenu",
-      images: ['/certifications/anssi.jpg'] // Vous devrez ajouter les images
+      images: ['./img/certif/anssi.jpg']
     },
     {
       id: 'pix',
@@ -31,7 +31,7 @@ const CertificationModal: React.FC<CertificationModalProps> = ({ isOpen, onClose
       description: "Certification des compétences numériques - Plateforme officielle française",
       color: "purple",
       status: "Obtenu",
-      images: ['/certifications/pix.jpg']
+      images: ['./img/certif/pix.jpg']
     },
     {
       id: 'rgpd',
@@ -41,7 +41,11 @@ const CertificationModal: React.FC<CertificationModalProps> = ({ isOpen, onClose
       description: "Certification en protection des données personnelles et conformité RGPD",
       color: "pink",
       status: "Obtenu",
-      images: ['/certifications/rgpd.jpg']
+      images: [
+        './img/certif/rgpd1.jpg',
+        './img/certif/rgpd2.jpg',
+        './img/certif/rgpd3.jpg'
+      ]
     },
     {
       id: 'google',
@@ -51,7 +55,7 @@ const CertificationModal: React.FC<CertificationModalProps> = ({ isOpen, onClose
       description: "Certifications Google en développement web et outils numériques",
       color: "yellow",
       status: "Obtenu",
-      images: ['/certifications/google1.jpg', '/certifications/google2.jpg']
+      images: ['./img/certif/google1.jpg', './img/certif/google2.jpg']
     },
     {
       id: 'microsoft',
@@ -61,7 +65,7 @@ const CertificationModal: React.FC<CertificationModalProps> = ({ isOpen, onClose
       description: "Certifications Microsoft en technologies et outils de productivité",
       color: "blue",
       status: "Obtenu",
-      images: ['/certifications/microsoft1.jpg', '/certifications/microsoft2.jpg']
+      images: ['./img/certif/microsoft1.jpg', './img/certif/microsoft2.jpg']
     }
   ];
 

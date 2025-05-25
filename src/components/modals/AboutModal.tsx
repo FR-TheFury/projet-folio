@@ -111,13 +111,14 @@ const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
               
               {/* Content */}
               <div className="space-y-8">
-                <div className="flex items-center justify-between">
+                {/* Header avec titre et bouton CV - amélioration mobile */}
+                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                   <h2 className="text-4xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent font-mono">
                     Moi et mon Parcours
                   </h2>
                   <button
                     onClick={() => setShowPDF(true)}
-                    className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-500 to-purple-500 text-white rounded-lg hover:from-cyan-600 hover:to-purple-600 transition-all duration-300 font-semibold"
+                    className="w-full lg:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-500 to-purple-500 text-white rounded-lg hover:from-cyan-600 hover:to-purple-600 transition-all duration-300 font-semibold"
                   >
                     <FileText size={20} />
                     Voir mon CV
@@ -231,7 +232,7 @@ const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
             <PDFViewer
               isOpen={showPDF}
               onClose={() => setShowPDF(false)}
-              pdfUrl="/cv.pdf" // Vous devrez ajouter votre CV dans le dossier public
+              pdfUrl="/cv.pdf"
             />
           )}
         </motion.div>
