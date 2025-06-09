@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { X, Heart, MapPin, Calendar, User, Phone, FileText, GraduationCap } from 'lucide-react';
+import { X, Heart, MapPin, Calendar, User, Phone, FileText, GraduationCap, Music } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import PDFViewer from '../PDFViewer';
 
@@ -54,6 +54,53 @@ const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
       year: "2018",
       status: "Obtenu",
       statusColor: "bg-cyan-500/20 text-cyan-300"
+    }
+  ];
+
+  const musicLinks = [
+    {
+      name: "YouTube",
+      url: "https://www.youtube.com/@Himely_pup",
+      color: "hover:text-red-500",
+      bgColor: "hover:bg-red-500/20",
+      svg: (
+        <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+        </svg>
+      )
+    },
+    {
+      name: "Deezer",
+      url: "https://www.deezer.com/fr/artist/328787671",
+      color: "hover:text-orange-500",
+      bgColor: "hover:bg-orange-500/20",
+      svg: (
+        <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M18.81 8.23h2.14v1.67h-2.14V8.23zm0 2.21h2.14v1.67h-2.14v-1.67zm0 2.21h2.14v1.67h-2.14v-1.67zm0 2.21h2.14v1.67h-2.14v-1.67zm0 2.21h2.14v1.67h-2.14v-1.67zm-2.81-8.84h2.14v1.67h-2.14V8.23zm0 2.21h2.14v1.67h-2.14v-1.67zm0 2.21h2.14v1.67h-2.14v-1.67zm0 2.21h2.14v1.67h-2.14v-1.67zm0 2.21h2.14v1.67h-2.14v-1.67zm-2.81-8.84h2.14v1.67h-2.14V8.23zm0 2.21h2.14v1.67h-2.14v-1.67zm0 2.21h2.14v1.67h-2.14v-1.67zm0 2.21h2.14v1.67h-2.14v-1.67zm0 2.21h2.14v1.67h-2.14v-1.67zm-2.81-6.63h2.14v1.67h-2.14v-1.67zm0 2.21h2.14v1.67h-2.14v-1.67zm0 2.21h2.14v1.67h-2.14v-1.67zm0 2.21h2.14v1.67h-2.14v-1.67zm-2.81-6.63h2.14v1.67H7.35v-1.67zm0 2.21h2.14v1.67H7.35v-1.67zm0 2.21h2.14v1.67H7.35v-1.67zm0 2.21h2.14v1.67H7.35v-1.67zm-2.81-4.42h2.14v1.67H4.54v-1.67zm0 2.21h2.14v1.67H4.54v-1.67zm0 2.21h2.14v1.67H4.54v-1.67zm-2.81-2.21h2.14v1.67H1.73v-1.67zm0 2.21h2.14v1.67H1.73v-1.67z"/>
+        </svg>
+      )
+    },
+    {
+      name: "SoundCloud",
+      url: "https://soundcloud.com/himely_pup",
+      color: "hover:text-orange-400",
+      bgColor: "hover:bg-orange-400/20",
+      svg: (
+        <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M1.175 12.225c-.051 0-.094.046-.101.1l-.233 2.154.233 2.105c.007.058.05.104.101.104s.094-.046.101-.104l.258-2.105-.258-2.154c-.007-.054-.05-.1-.101-.1zm1.49.409c-.075 0-.139.067-.149.148l-.203 1.745.203 1.692c.01.081.074.148.149.148s.139-.067.149-.148l.229-1.692-.229-1.745c-.01-.081-.074-.148-.149-.148zm1.49.622c-.075 0-.139.063-.149.141l-.178 1.123.178 1.067c.01.078.074.141.149.141s.139-.063.149-.141l.203-1.067-.203-1.123c-.01-.078-.074-.141-.149-.141zm1.49.151c-.075 0-.139.067-.149.148l-.15.972.15.915c.01.081.074.148.149.148s.139-.067.149-.148l.174-.915-.174-.972c-.01-.081-.074-.148-.149-.148zm1.49.326c-.075 0-.139.063-.149.141l-.124.646.124.612c.01.078.074.141.149.141s.139-.063.149-.141l.145-.612-.145-.646c-.01-.078-.074-.141-.149-.141zm1.49.235c-.075 0-.139.067-.149.148l-.099.411.099.378c.01.081.074.148.149.148s.139-.067.149-.148l.115-.378-.115-.411c-.01-.081-.074-.148-.149-.148zm1.49.326c-.075 0-.139.063-.149.141l-.071.085.071.07c.01.078.074.141.149.141s.139-.063.149-.141l.082-.07-.082-.085c-.01-.078-.074-.141-.149-.141zm1.49 0c-.075 0-.139.063-.149.141l-.071.085.071.07c.01.078.074.141.149.141s.139-.063.149-.141l.082-.07-.082-.085c-.01-.078-.074-.141-.149-.141zm9.671-1.89c-.825 0-1.628.306-2.235.852-.05.047-.067.12-.04.185.025.064.083.109.154.118l.72.09c.075.01.15-.019.194-.078.316-.421.805-.668 1.325-.668.943 0 1.709.766 1.709 1.709v.591c0 .082.067.149.149.149h2.832c.943 0 1.709.766 1.709 1.709s-.766 1.709-1.709 1.709H9.5c-.082 0-.149.067-.149.149v.591c0 .082.067.149.149.149h12.299c1.404 0 2.542-1.138 2.542-2.542s-1.138-2.542-2.542-2.542c-.354 0-.693.073-1.008.205-.05-.825-.766-1.464-1.616-1.464z"/>
+        </svg>
+      )
+    },
+    {
+      name: "Spotify",
+      url: "https://open.spotify.com/intl-fr/artist/0Lms7v1qvEfqjLRGMCJUuY?si=dp8YHuQ1SBym95YX1ihknA",
+      color: "hover:text-green-500",
+      bgColor: "hover:bg-green-500/20",
+      svg: (
+        <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z"/>
+        </svg>
+      )
     }
   ];
 
@@ -158,6 +205,39 @@ const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
                             </span>
                           </div>
                         </motion.div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Section Artiste */}
+                  <div className="space-y-4">
+                    <h3 className="text-2xl font-bold text-purple-300 flex items-center gap-2">
+                      <Music size={24} />
+                      Artiste
+                    </h3>
+                    <p className="text-cyan-100">
+                      Découvrez ma musique sur toutes les plateformes de streaming :
+                    </p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {musicLinks.map((link, index) => (
+                        <motion.a
+                          key={link.name}
+                          href={link.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`flex items-center gap-4 p-4 border border-purple-400/30 rounded-lg bg-black/20 transition-all duration-300 ${link.color} ${link.bgColor}`}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: index * 0.1 }}
+                        >
+                          <div className="p-2 bg-purple-400/20 rounded-lg">
+                            {link.svg}
+                          </div>
+                          <div className="flex-1">
+                            <h4 className="text-purple-300 font-bold">{link.name}</h4>
+                            <p className="text-sm text-cyan-100">@Himely_pup</p>
+                          </div>
+                        </motion.a>
                       ))}
                     </div>
                   </div>
