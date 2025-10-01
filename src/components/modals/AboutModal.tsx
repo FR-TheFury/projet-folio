@@ -24,15 +24,15 @@ const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
       title: "Mastère Développeur Fullstack",
       school: "EPSI Arras",
       year: "2025-2027",
-      status: "À venir",
-      statusColor: "bg-blue-500/20 text-blue-300"
+      status: "En cours",
+      statusColor: "bg-green-500/20 text-green-300"
     },
     {
       title: "Bachelor Alternance DevOps Dev IA et Data Science",
       school: "EPSI Arras",
       year: "2024-2025",
-      status: "En cours",
-      statusColor: "bg-green-500/20 text-green-300"
+      status: "Obtenu",
+      statusColor: "bg-cyan-500/20 text-cyan-300"
     },
     {
       title: "BTS SIO option SLAM",
