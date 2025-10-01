@@ -11,6 +11,46 @@ interface ProjectsModalProps {
 const ProjectsModal: React.FC<ProjectsModalProps> = ({ isOpen, onClose }) => {
   const projects = [
     {
+      title: "Artist & Game Tracker",
+      description: "Dashboard de suivi d'informations de jeux vidéo et d'artistes musicaux avec diverses API et une base de données Supabase",
+      tech: ["React", "TypeScript", "Tailwind", "Supabase", "API"],
+      status: "En ligne",
+      statusColor: "bg-green-500/20 text-green-300",
+      liveUrl: "https://www.himely-dashboard.ovh"
+    },
+    {
+      title: "Neon Vinyl Visualizer",
+      description: "Site de visualisation 3D audio à partir de votre import audio avec effets néon",
+      tech: ["React", "TypeScript", "Tailwind", "Three.js", "Web Audio API"],
+      status: "En ligne",
+      statusColor: "bg-green-500/20 text-green-300",
+      liveUrl: "https://fr-thefury.github.io/neon-groove-orbit"
+    },
+    {
+      title: "BI Développement",
+      description: "Refonte complète du site de l'entreprise dans laquelle je suis alternant",
+      tech: ["React", "TypeScript", "Tailwind", "JavaScript"],
+      status: "En ligne",
+      statusColor: "bg-green-500/20 text-green-300",
+      liveUrl: "https://b-i-dev.com"
+    },
+    {
+      title: "Traducteur vocal en direct multilingue",
+      description: "Application de traduction vocale en direct qui comprend toutes les langues d'entrée et traduit dans la langue choisie, avec sortie audio sur micro",
+      tech: ["React", "TypeScript", "Tailwind", "Web Speech API", "JavaScript"],
+      status: "En ligne",
+      statusColor: "bg-green-500/20 text-green-300",
+      liveUrl: "https://fr-thefury.github.io/discord-bridge-speak"
+    },
+    {
+      title: "Grafenberg Album",
+      description: "Site créé en 6h25 pour faire la promotion de l'album de mon père",
+      tech: ["React", "TypeScript", "Tailwind", "JavaScript"],
+      status: "En ligne",
+      statusColor: "bg-green-500/20 text-green-300",
+      liveUrl: "http://www.grafenberg.ovh"
+    },
+    {
       title: "Portfolio Officiel (V2)",
       description: "Site portfolio personnel avec thème spatial et animations futuristes créé avec React, TypeScript et Framer Motion",
       tech: ["React", "TypeScript", "Framer Motion", "Tailwind", "Three.js"],
