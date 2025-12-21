@@ -69,10 +69,9 @@ const ProjectsModal: React.FC<ProjectsModalProps> = ({ isOpen, onClose }) => {
     {
       title: "Gallery VRChat",
       description: "Site personnel de galerie pour mes créations et expériences dans l'univers VRChat",
-      tech: ["React", "CSS", "TypeScript", "Tailwind", "JavaScript", "Contenue 3D (18+)", "Contenue AI"],
+      tech: ["React", "CSS", "TypeScript", "Tailwind", "JavaScript", "Contenue 3D", "Contenue AI"],
       status: "En ligne",
       statusColor: "bg-green-500/20 text-green-300",
-      liveUrl: "https://www.himely-puppy.ovh"
     },
     {
       title: "100 Jours 100 Programmes",
